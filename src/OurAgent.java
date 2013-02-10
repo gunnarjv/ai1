@@ -35,57 +35,49 @@ public class OurAgent implements Agent
     					Matcher m = Pattern.compile("\\(\\s*HOME\\s+([0-9]+)\\s+([0-9]+)\\s*\\)").matcher(percept);
     					if (m.matches()) {
                             env.home = new Point2D(Integer.parseInt(m.group(1)), Integer.parseInt(m.group(2)));
-                            System.out.println("Home end.");
     					}
     				}
                     else if(perceptName.equals("SIZE"))
                     {
-                        System.out.println("Size start.");
         				Matcher m = Pattern.compile("\\(\\s*SIZE\\s+([0-9]+)\\s+([0-9]+)\\s*\\)").matcher(percept);
     					if (m.matches()) {
                             env.c = Integer.parseInt(m.group(1));
                             env.r = Integer.parseInt(m.group(2));
-                            System.out.println("Size end.");
     					}
                     }
                     else if(perceptName.equals("ORIENTATION"))
                     {
-                        System.out.println("Orientation start.");
         				Matcher m = Pattern.compile("\\(\\s*ORIENTATION\\s*(\\S+)\\s*\\)").matcher(percept);
-                        System.out.println("Orientation matching end. "); 
-                        switch(m.group(0))
-                        {
-                            case "NORTH":
-                                state.direction = 0;
-                                break;
-                            case "EAST":
-                                state.direction = 1;
-                                break;
-                            case "SOUTH":
-                                state.direction = 2;                          
-                                break;
-                            case "WEST":
-                                state.direction = 3;
-                                break;
-                            default:
-                                System.out.println("Something went horribly horribly wrong.");    
+                        if(m.matches()) {
+                            switch(m.group(1))
+                            {
+                                case "NORTH":
+                                    state.direction = 0;
+                                    break;
+                                case "EAST":
+                                    state.direction = 1;
+                                    break;
+                                case "SOUTH":
+                                    state.direction = 2;                          
+                                    break;
+                                case "WEST":
+                                    state.direction = 3;
+                                    break;
+                                default:
+                                    System.out.println("Something went horribly, horribly wrong.");    
+                            }
                         }
-                        System.out.println("Orientation end.");                        
     				}
                     else if(perceptName.equals("AT"))
                     {
         				Matcher m = Pattern.compile("\\(\\s*AT\\s*DIRT\\s+([0-9]+)\\s+([0-9]+)\\s*\\)").matcher(percept);
     					if (m.matches()) {
-                                System.out.println("AT DIRT start.");
                                 state.dirts.add(new Point2D(Integer.parseInt(m.group(1)), Integer.parseInt(m.group(2))));
-                                System.out.println("AT DIRT end.");
     					}
-                        else
-                            m = Pattern.compile("\\(\\s*AT\\s*OBSTACLE\\s+([0-9]+)\\s+([0-9]+)\\s*\\)").matcher(percept);
+                        
+                        m = Pattern.compile("\\(\\s*AT\\s*OBSTACLE\\s+([0-9]+)\\s+([0-9]+)\\s*\\)").matcher(percept);
                         if(m.matches()) {
-                                System.out.println("AT OBSTACLE start.");
-                                env.obstacles.add(new Point2D(Integer.parseInt(m.group(1)), Integer.parseInt(m.group(2))));
-                                System.out.println("AT OBSTACLE end.");                            
+                                env.obstacles.add(new Point2D(Integer.parseInt(m.group(1)), Integer.parseInt(m.group(2))));                           
                         }
                     }
                     /*
@@ -115,17 +107,32 @@ public class OurAgent implements Agent
                 System.out.println(e);
             }
 		}
-    }
+    
         /***********************Call algorithms and begin search***************************/
-        
+    
+        System.out.println("Obstacles located at:");
+        for(Point2D p : env.obstacles) {
+            System.out.println("x: " + p.x() + " - y: " + p.y() );
+        }
+        System.out.println("\n\n");
+        System.out.println("Dirt located at:");
+        for(Point2D p : state.dirts) {
+            System.out.println("x: " + p.x() + " - y: " + p.y() );
+        }
+        System.out.println("\n");
+
+        //Initialize the searching algorithm and find optimal path.
+        Search searcher = new BFS(env);
+        route = searcher.search(state);
+        return;
+    }
 
     public String nextAction(Collection<String> percepts) {
 		
-        Random r = new Random();
-
-		System.out.println("");
-		String[] actions = { "TURN_ON", "TURN_OFF", "TURN_RIGHT", "TURN_LEFT", "GO", "SUCK" }; 
-    	return actions[r.nextInt(actions.length)];
-    	//return "halló gunna";
+        System.out.println("Is the stack empty? - "  + route.empty());
+        if(!route.empty())        
+    	   return route.pop();
+        else
+            return "TURN_OFF";
 	}
 }
