@@ -20,19 +20,25 @@ public class BFS implements Search
        if(is_goal(root.state))
        		return new Stack<String>();
 
+        System.out.println("Number of dirts: " + root.state.dirts.size());
+
        f.offer(root);
+       int i = 0;
 
        while(f.peek() != null)
        {
+          System.out.println(i++);
        		Node n = f.remove();
        		State s = n.state;
 
-       		for (String m: s.get_legal_moves(env))
+       		for (String m : s.get_legal_moves(env))
        		{
        			Node child = new Node(s.next_state(m), n, m);
        			
-       			if(is_goal(child.state))
+       			if(is_goal(child.state)) {
+              System.out.println("Final number of dirts: " + child.state.dirts.size());
        				return path(child);
+            }
        			else
 	       			f.add(child);
        		}
@@ -46,7 +52,7 @@ public class BFS implements Search
 
     private boolean is_goal(State state)
     {
-       if(state.dirts.isEmpty() && env.at_home(state.location))
+       if(state.dirts.isEmpty() && env.at_home(state.location) && !state.ON)
        		return true;
        return false;
     }
@@ -77,7 +83,7 @@ public class BFS implements Search
       dirtlist.add(new Point2D(0, 0));
 
 
-      State state = new State(true, new Point2D(1, 1), 3, dirtlist);
+      State state = new State(false, new Point2D(1, 1), 3, dirtlist);
 
       env.r = 2;
       env.c = 2;
@@ -86,7 +92,8 @@ public class BFS implements Search
       Search searcher = new BFS(env);
       Stack<String> moves = searcher.search(state);
 
-      for(String s : moves) {
+      while(!moves.isEmpty()) {
+        String s = moves.pop();
         System.out.println(s);
       }
 

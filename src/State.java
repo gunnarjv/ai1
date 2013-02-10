@@ -118,8 +118,17 @@ TURN_OFF
         {
             //Remove the dirt at point location from the list of dirts
             Point2D newPoint = new Point2D(location.x(),location.y());
-            dirts.remove(newPoint);
-            return new State(true, newPoint, direction, dirts);
+
+            if(dirts.contains(newPoint)) {
+                //Creating a new instance of our dirt list in memory so the nodes won't all reference the same dirt list.
+                List<Point2D> newDirts = new ArrayList<Point2D>();
+                for(Point2D d : dirts) newDirts.add(new Point2D(d.x(), d.y()));
+                Boolean didWeSuck = newDirts.remove(newPoint);
+                return new State(true, newPoint, direction, newDirts);
+            }
+            else
+                //return new State(true, newPoint, direction, dirts)
+                return this;
         }
         else //if(move == "TURN_OFF")
         {
