@@ -90,10 +90,6 @@ public class OurAgent implements Agent
 		
         Random r = new Random();
 
-        System.out.print("perceiving:");
-		for(String percept:percepts) {
-			System.out.print("'" + percept + "', ");
-		}
 		System.out.println("");
 		String[] actions = { "TURN_ON", "TURN_OFF", "TURN_RIGHT", "TURN_LEFT", "GO", "SUCK" }; 
 		return actions[r.nextInt(actions.length)];
