@@ -67,4 +67,30 @@ public class BFS implements Search
        return strat;
     }
 
+    public static void main(String args[]) {
+
+      Environment env = new Environment();
+      List<Point2D> dirtlist = new ArrayList<Point2D>();
+
+
+      dirtlist.add(new Point2D(0, 1));
+      dirtlist.add(new Point2D(0, 0));
+
+
+      State state = new State(true, new Point2D(1, 1), 3, dirtlist);
+
+      env.r = 2;
+      env.c = 2;
+      env.home = new Point2D(1, 1);
+
+      Search searcher = new BFS(env);
+      Stack<String> moves = searcher.search(state);
+
+      for(String s : moves) {
+        System.out.println(s);
+      }
+
+
+    }
+
 }

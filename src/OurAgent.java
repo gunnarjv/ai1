@@ -122,6 +122,7 @@ public class OurAgent implements Agent
         System.out.println("\n");
 
         //Initialize the searching algorithm and find optimal path.
+        state.location = new Point2D(env.home.x(), env.home.y());
         Search searcher = new BFS(env);
         route = searcher.search(state);
         return;
@@ -130,6 +131,13 @@ public class OurAgent implements Agent
     public String nextAction(Collection<String> percepts) {
 		
         System.out.println("Is the stack empty? - "  + route.empty());
+       
+        int n = 0;
+
+        while(n < 25000000) {
+             n++;
+        }
+
         if(!route.empty())        
     	   return route.pop();
         else
