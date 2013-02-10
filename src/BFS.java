@@ -20,14 +20,12 @@ public class BFS implements Search
        if(is_goal(root.state))
        		return new Stack<String>();
 
-        System.out.println("Number of dirts: " + root.state.dirts.size());
 
        f.offer(root);
        int i = 0;
 
        while(f.peek() != null)
        {
-          System.out.println(i++);
        		Node n = f.remove();
        		State s = n.state;
 
@@ -36,7 +34,6 @@ public class BFS implements Search
        			Node child = new Node(s.next_state(m), n, m);
        			
        			if(is_goal(child.state)) {
-              System.out.println("Final number of dirts: " + child.state.dirts.size());
        				return path(child);
             }
        			else
@@ -83,11 +80,11 @@ public class BFS implements Search
       dirtlist.add(new Point2D(0, 0));
 
 
-      State state = new State(false, new Point2D(1, 1), 3, dirtlist);
+      State state = new State(false, new Point2D(2, 2), 3, dirtlist);
 
-      env.r = 2;
-      env.c = 2;
-      env.home = new Point2D(1, 1);
+      env.r = 3;
+      env.c = 3;
+      env.home = new Point2D(2, 2);
 
       Search searcher = new BFS(env);
       Stack<String> moves = searcher.search(state);

@@ -58,13 +58,13 @@ public State(){
                     moves.add("GO");
                 break;
             case 2: // South
-                if(location.x() == 0 || env.obstacles.contains( new Point2D(location.x() - 1, location.y() )))//If at bottom row, or obstacle in front.
+                if(location.y() == 0 || env.obstacles.contains( new Point2D(location.x() , location.y() - 1 )))//If at bottom row, or obstacle in front.
                     break;
                 else
                     moves.add("GO");
                 break;
             case 3: // West
-                if(location.x() == 0 || env.obstacles.contains( new Point2D(location.x(), location.y() - 1)))//If at westmost column, or obstacle in front.
+                if(location.x() == 0 || env.obstacles.contains( new Point2D(location.x() - 1, location.y())))//If at westmost column, or obstacle in front.
                     break;
                 else
                     moves.add("GO");
