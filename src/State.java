@@ -9,7 +9,7 @@ public class State {
         this.dirts = dirts;
     }
 
-public State(){}
+    public State(){}
     
     public boolean ON = false;
     //Current coordinates
