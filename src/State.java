@@ -9,7 +9,10 @@ public class State {
         this.dirts = dirts;
     }
 
-public State(){}
+public State(){
+
+        dirts = new ArrayList<Point2D>();
+    }
     
     public boolean ON = false;
     //Current coordinates
