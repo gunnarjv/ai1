@@ -8,8 +8,6 @@ public class State {
         this.direction = direction;
         this.dirts = dirts;
     }
-
-public State(){}
     
     public boolean ON = false;
     //Current coordinates

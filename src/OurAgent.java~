@@ -61,7 +61,7 @@ public class OurAgent implements Agent
                 {
     				Matcher m = Pattern.compile("\\(\\s*AT\\s+([0-9]+)\\s+([0-9]+)\\s*\\)").matcher(percept);
 					if (m.matches()) {
-                            state.dirts.add(new Point2D(Integer.parseInt(m.group(1)), Integer.parseInt(m.group(2))));
+                            state.dirts.add(new Point2D(Integer.parseInt(m.group(1)), Integer.parseInt(m.group(2)));
 					}
                 }
                 else 
