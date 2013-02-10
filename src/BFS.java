@@ -10,7 +10,7 @@ public class BFS implements Search
 
        // If the initial state is goal we are done.
        if(is_goal(root))
-       		return strategy;
+       		return new Stack<String>();
 
        while(!f.isEmpty())
        {
