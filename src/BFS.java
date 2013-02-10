@@ -2,15 +2,16 @@ import java.util.*;
 
 public class BFS implements Search
 {
-	Queue<Node> f = new Queue<Node>();
-
     public Stack<String> search(Environment env, State state)
     {
+	   Queue<Node> f = new Queue<Node>();
        Node root = new Node(state, null, null);
 
        // If the initial state is goal we are done.
        if(is_goal(root))
        		return new Stack<String>();
+
+       f.push(root);
 
        while(!f.isEmpty())
        {
@@ -24,7 +25,7 @@ public class BFS implements Search
        			if(is_goal(child.state))
        				return path(child.state);
        			else
-	       			f.add(c);       			
+	       			f.add(c);
        		}
        }
        // We should never get here.
