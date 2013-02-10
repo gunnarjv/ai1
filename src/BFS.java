@@ -47,9 +47,9 @@ public class BFS implements Search
        strat.push(goal.move);
        next_state = goal.parent;
 
-       while(next_state)
+       while(next_state.move) //While we are not asking root
        {
-       		strat.push(next_state.goal);
+       		strat.push(next_state.move);
        		next_state = next_state.parent
        }
 
