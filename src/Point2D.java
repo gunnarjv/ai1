@@ -10,20 +10,20 @@ import java.util.Comparator;
 
 public class Point2D{
 
-    private final double x;    // x coordinate
-    private final double y;    // y coordinate
+    private int x;    // x coordinate
+    private int y;    // y coordinate
 
     // create a new point (x, y)
-    public Point2D(double x, double y) {
+    public Point2D(int x, int y) {
         this.x = x;
         this.y = y;
     }
 
     // return the x-coorindate of this point
-    public double x() { return x; }
+    public int x() { return x; }
 
     // return the y-coorindate of this point
-    public double y() { return y; }
+    public int y() { return y; }
 
 
 

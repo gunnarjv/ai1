@@ -8,6 +8,8 @@ public class State {
         this.direction = direction;
         this.dirts = dirts;
     }
+
+public State(){}
     
     public boolean ON = false;
     //Current coordinates
@@ -40,13 +42,14 @@ public class State {
         switch(direction)
         {
             case 0: // North
-                if(location.y() == env.clc || env.obstacles.contains(new Point2D(location.x(),location.y() + 1 )))//If in northmost row, or obstacle 
+                if(location.y() == env.c || env.obstacles.contains(new Point2D(location.x(),location.y()+1)))//If in northmost row, or obstacle 
                     break;
                 else
                     moves.add("GO");
             break;
             case 1: // East
-                if(location.x() == env.r ||env.obstacles.contains(nwq PointD(location.x() + 1, location.y() )))//If in eastmost column, or obstacle in front.
+                //If we are at the rightmost location
+                if(location.x() == env.r ||env.obstacles.contains(new Point2D(location.x() + 1, location.y()))) //If in eastmost column, or obstacle in front.
                     break;
                 else
                     moves.add("GO");
@@ -54,7 +57,7 @@ public class State {
             case 2: // South
                 if(location.x() == 0 || env.obstacles.contains( new Point2D(location.x() - 1, location.y() )))//If at bottom row, or obstacle in front.
                     break;
-                else:
+                else
                     moves.add("GO");
             break;
             case 3: // West
@@ -77,43 +80,43 @@ TURN_OFF
         if(move == "TURN_ON")
         {
             //Turn the robot on
-            return(new State(TRUE, new Point2D(location.x(),location.y()), direction, dirts));
+            return(new State(true, new Point2D(location.x(),location.y()), direction, dirts));
         }
         if(move == "TURN_RIGHT")
         {
             //Create a new state the same as the old but change direction
-            return(new State(TRUE, new Point2D(location.x(),location.y(), (direction+1)%4, dirts)));
+            return(new State(true, new Point2D(location.x(),location.y()), (direction+1)%4, dirts));
         }
         if(move == "TURN_LEFT")
         {
             //Create a new state the same as the old but change direction
             //For negative numbers take modulo add 3 and take modulo again
             int newDirection = (((direction-1)%4)+4)%4;
-            return(new State(TRUE, new Point2D(location.x(),location.y(), newDirection, dirts)));
+            return(new State(true, new Point2D(location.x(),location.y()), newDirection, dirts));
         }
         if(move == "GO")
         {
             //Add one to the direction the robot is facing
             if(direction == 0)
-                return(new State(TRUE,new Point2D(location.x(),location.y()+1, direction, dirts)));
+                return(new State(true,new Point2D(location.x(),location.y()+1), direction, dirts));
             if(direction == 1)
-                return(new State(TRUE,new Point2D(location.x()+1,location.y(), direction, dirts)));
+                return(new State(true,new Point2D(location.x()+1,location.y()), direction, dirts));
             if(direction == 2)
-                return(new State(TRUE,new Point2D(location.x(),location.y()-1, direction, dirts)));
+                return(new State(true,new Point2D(location.x(),location.y()-1), direction, dirts));
             if(direction == 3)
-                return(new State(TRUE,new Point2D(location.x()-1,location.y(), direction, dirts)));
+                return(new State(true,new Point2D(location.x()-1,location.y()), direction, dirts));
         }
         if(move == "SUCK")
         {
             //Remove the dirt at point location from the list of dirts
             Point2D newPoint = new Point2D(location.x(),location.y());
             dirts.remove(newPoint);
-            return(new State(TRUE, newPoint, direction, dirts));
+            return(new State(true, newPoint, direction, dirts));
         }
-        if(move == "TURN_OFF")
+        else //if(move == "TURN_OFF")
         {
             //Turn the robot off
-            return(new State(FALSE, new Point2D(location.x(),location.y()), direction, dirts));
+            return(new State(false, new Point2D(location.x(),location.y()), direction, dirts));
         }
     }
 }

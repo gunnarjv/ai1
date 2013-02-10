@@ -1,3 +1,7 @@
+import java.util.Collection;  	
+import java.util.Random;	  	
+import java.util.regex.Matcher;	
+import java.util.regex.Pattern;
 import java.util.*;
 
 public class OurAgent implements Agent
@@ -24,15 +28,15 @@ public class OurAgent implements Agent
 				if (perceptName.equals("HOME")) {
 					Matcher m = Pattern.compile("\\(\\s*HOME\\s+([0-9]+)\\s+([0-9]+)\\s*\\)").matcher(percept);
 					if (m.matches()) {
-                        env.home = new Point2D(m.group(1), m.group(2))
+                        env.home = new Point2D(Integer.parseInt(m.group(1)), Integer.parseInt(m.group(2)));
 					}
 				}
                 else if(perceptName.equals("SIZE"))
                 {
     				Matcher m = Pattern.compile("\\(\\s*SIZE\\s+([0-9]+)\\s+([0-9]+)\\s*\\)").matcher(percept);
 					if (m.matches()) {
-                        env.c = m.group(1);
-                        env.r = m.group(2);
+                        env.c = Integer.parseInt(m.group(1));
+                        env.r = Integer.parseInt(m.group(2));
 					}
                 }
                 else if(perceptName.equals("ORIENTATION"))
@@ -47,7 +51,7 @@ public class OurAgent implements Agent
                             state.direction = 1;
                             break;
                         case "SOUTH":
-                            state.direction = 2;                            
+                            state.direction = 2;                          
                             break;
                         case "WEST":
                             state.direction = 3;
@@ -58,7 +62,7 @@ public class OurAgent implements Agent
                 {
     				Matcher m = Pattern.compile("\\(\\s*AT\\s+([0-9]+)\\s+([0-9]+)\\s*\\)").matcher(percept);
 					if (m.matches()) {
-                            state.dirts.add(new Point2D(m.group(1), m.group(2));
+                            state.dirts.add(new Point2D(Integer.parseInt(m.group(1)), Integer.parseInt(m.group(2))));
 					}
                 }
                 else 
