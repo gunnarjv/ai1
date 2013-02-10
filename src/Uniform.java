@@ -3,13 +3,12 @@ import java.util.*;
 public class Uniform implements Search
 {
 
-  public Environment env;
+    public Environment env;
 
-  public Uniform(Environment lu_env) {
+    public Uniform(Environment lu_env) {
 
-    this.env = lu_env;
-
-  }
+      this.env = lu_env;
+    }
 
     public Stack<String> search(State state)
     {
@@ -28,10 +27,12 @@ public class Uniform implements Search
 
        while(f.peek() != null)
        {
+          for(Node n : f) System.out.print(n.cost + " - ");
+          System.out.println("");
        		Node n = f.poll();
        		State s = n.state;
-          
-          if(is_goal(n)) return path(n);
+
+          if(is_goal(n.state)) return path(n);
 
        		for (String m : s.get_legal_moves(env))
        		{
@@ -75,20 +76,18 @@ public class Uniform implements Search
       switch(m.move) {
 
         case "TURN_OFF":
-          if(m.state.location == env.home) {
+          if(m.state.location == env.home)
               m.cost = 1 + (15 * m.state.dirts.size()) + parentCost;
           else
               m.cost = 100 + (15 * m.state.dirts.size()) + parentCost;
           break;
         case "SUCK":
-          if(!m.state.dirts.contains(m.state.location))
+          if(!m.state.dirts.contains(m.state.location)) {
             m.cost = 5 + parentCost;
             break;
-          else
+          }
         default:
             m.cost = 1 + parentCost;
-          }
-
       }
     }
 
@@ -116,8 +115,6 @@ public class Uniform implements Search
         String s = moves.pop();
         System.out.println(s);
       }
-
-
     }
 
 }
