@@ -1,20 +1,11 @@
-//*********************************************************************************//
-//																				   //
-//		DFS IS PRETTY MUCH THE SAME AS BFS, BUT USES A STACK INSTEAD OF A CUE.	   //
-//		THUS, WITHOUT HEURISTICS, WE'LL TRAVEL DOWN AN INFINITE BRANCH, AND		   //
-//		NEVER RETURN HOME. :-(													   //
-//																				   //
-//***************************[-=Captain's comments=-]******************************//
-
-
 import java.util.*;
 
-public class DFS implements Search
+public class Uniform implements Search
 {
 
-public Environment env;
+  public Environment env;
 
-  public DFS(Environment lu_env) {
+  public Uniform(Environment lu_env) {
 
     this.env = lu_env;
 
@@ -22,31 +13,31 @@ public Environment env;
 
     public Stack<String> search(State state)
     {
-	     Stack<Node> f = new Stack<Node>();
+	     Queue<Node> f = new PriorityQueue<Node>();
+       List<Node> explored = new ArrayList<Node>();
+
        Node root = new Node(state, null, null);
+       root.cost = 0;
 
        // If the initial state is goal we are done.
        if(is_goal(root.state))
        		return new Stack<String>();
 
-
-       f.push(root);
+       f.add(root);
        int i = 0;
 
-       while(!f.empty())
+       while(f.peek() != null)
        {
-       		Node n = f.pop();
+       		Node n = f.poll();
        		State s = n.state;
+          
+          if(is_goal(n)) return path(n);
 
        		for (String m : s.get_legal_moves(env))
        		{
        			Node child = new Node(s.next_state(m), n, m);
-       			
-       			if(is_goal(child.state)) {
-       				return path(child);
-            }
-       			else
-	       			f.push(child);
+            evalCost(child, n.cost);
+	       		f.add(child);
        		}
        }
        // We should never get here.
@@ -79,22 +70,46 @@ public Environment env;
        return strat;
     }
 
+    private void evalCost(Node m, int parentCost) {
+
+      switch(m.move) {
+
+        case "TURN_OFF":
+          if(m.state.location == env.home) {
+              m.cost = 1 + (15 * m.state.dirts.size()) + parentCost;
+          else
+              m.cost = 100 + (15 * m.state.dirts.size()) + parentCost;
+          break;
+        case "SUCK":
+          if(!m.state.dirts.contains(m.state.location))
+            m.cost = 5 + parentCost;
+            break;
+          else
+        default:
+            m.cost = 1 + parentCost;
+          }
+
+      }
+    }
+
     public static void main(String args[]) {
 
       Environment env = new Environment();
       List<Point2D> dirtlist = new ArrayList<Point2D>();
       List<Point2D> obstaclelist = new ArrayList<Point2D>();
 
+
+      obstaclelist.add(new Point2D(0, 1));
       dirtlist.add(new Point2D(0, 0));
-      State state = new State(false, new Point2D(0, 0), 3, dirtlist);
 
-      env.r = 1;
-      env.c = 1;
+      State state = new State(false, new Point2D(1, 1), 3, dirtlist);
 
-      env.home = new Point2D(0, 0);
+      env.r = 2;
+      env.c = 2;
+      env.home = new Point2D(1, 1);
       env.obstacles = obstaclelist;
 
-      Search searcher = new DFS(env);
+      Search searcher = new Uniform(env);
       Stack<String> moves = searcher.search(state);
 
       while(!moves.isEmpty()) {

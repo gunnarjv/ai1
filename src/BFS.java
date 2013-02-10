@@ -77,8 +77,8 @@ public class BFS implements Search
       List<Point2D> obstaclelist = new ArrayList<Point2D>();
 
 
-      obstaclelist.add(new Point2D(1, 1));
-      dirtlist.add(new Point2D(1, 1));
+      obstaclelist.add(new Point2D(0, 1));
+      dirtlist.add(new Point2D(0, 0));
 
       State state = new State(false, new Point2D(1, 1), 3, dirtlist);
 
