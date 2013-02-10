@@ -93,6 +93,6 @@ public class OurAgent implements Agent
 		System.out.println("");
 		String[] actions = { "TURN_ON", "TURN_OFF", "TURN_RIGHT", "TURN_LEFT", "GO", "SUCK" }; 
 		return actions[random.nextInt(actions.length)]; */
-    	return "halló gunna";
+    	//return "halló gunna";
 	}
 }

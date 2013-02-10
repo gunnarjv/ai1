@@ -42,7 +42,7 @@ public State(){}
         switch(direction)
         {
             case 0: // North
-                if(location.y() == env.c || env.obstacles.contains(new Point2D(location.x(),location.y()+1)))//If in northmost row, or obstacle 
+                if(location.y() == env.c || env.obstacles.contains(new Point2D(location.x(),location.y() + 1)))//If in northmost row, or obstacle 
                     break;
                 else
                     moves.add("GO");
@@ -85,26 +85,26 @@ TURN_OFF
         if(move == "TURN_RIGHT")
         {
             //Create a new state the same as the old but change direction
-            return(new State(true, new Point2D(location.x(),location.y()), (direction+1)%4, dirts));
+            return(new State(true, new Point2D(location.x(),location.y()), (direction+1) % 4, dirts));
         }
         if(move == "TURN_LEFT")
         {
             //Create a new state the same as the old but change direction
             //For negative numbers take modulo add 3 and take modulo again
-            int newDirection = (((direction-1)%4)+4)%4;
+            int newDirection = (((direction-1) % 4) + 4) % 4;
             return(new State(true, new Point2D(location.x(),location.y()), newDirection, dirts));
         }
         if(move == "GO")
         {
             //Add one to the direction the robot is facing
             if(direction == 0)
-                return(new State(true,new Point2D(location.x(),location.y()+1), direction, dirts));
+                return(new State(true,new Point2D(location.x(),location.y() + 1), direction, dirts));
             if(direction == 1)
-                return(new State(true,new Point2D(location.x()+1,location.y()), direction, dirts));
+                return(new State(true,new Point2D(location.x() + 1,location.y()), direction, dirts));
             if(direction == 2)
-                return(new State(true,new Point2D(location.x(),location.y()-1), direction, dirts));
+                return(new State(true,new Point2D(location.x(),location.y() - 1), direction, dirts));
             if(direction == 3)
-                return(new State(true,new Point2D(location.x()-1,location.y()), direction, dirts));
+                return(new State(true,new Point2D(location.x() - 1,location.y()), direction, dirts));
         }
         if(move == "SUCK")
         {
