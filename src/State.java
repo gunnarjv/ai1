@@ -61,6 +61,7 @@ public State(){}
                     moves.add("GO");
             break;
             case 3: // West
+                if(location.x() == 0 || env.obstacles.contains( new Point2D(location.x(), location.y() - 1)))//If at westmost column, or obstacle in front.
             break;
         }
           
