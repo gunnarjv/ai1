@@ -9,7 +9,7 @@ public class OurAgent implements Agent
     private Environment env = new Environment();
     private State state = new State();
     private Stack<String> route = new Stack<String>();
-    private Search search = new BFS();
+    //private Search search = new BFS(env);
 
 
     public void init(Collection<String> percepts) {
@@ -51,9 +51,9 @@ public class OurAgent implements Agent
                     else if(perceptName.equals("ORIENTATION"))
                     {
                         System.out.println("Orientation start.");
-        				Matcher m = Pattern.compile("\\(\\s*ORIENTATION\\s+([A-z]+)\\s*\\)").matcher(percept);
-                        System.out.println("Orientation matching end. " + m.group(1) ); 
-                        switch(m.group(1))
+        				Matcher m = Pattern.compile("\\(\\s*ORIENTATION\\s*(\\S+)\\s*\\)").matcher(percept);
+                        System.out.println("Orientation matching end. "); 
+                        switch(m.group(0))
                         {
                             case "NORTH":
                                 state.direction = 0;
