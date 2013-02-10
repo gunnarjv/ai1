@@ -5,6 +5,7 @@ public class OurAgent implements Agent
     private Environment env = new Environment();
     private State state = new State();
     private Stack<String> route = new Stack<String>();
+    private Search search = new BFS();
 
     public void init(Collection<String> percepts) {
 		/*

@@ -1,6 +1,6 @@
 import java.util.*
 
-public class BFS
+public class BFS implements Search
 {
     public Stack<String> search()
     {
