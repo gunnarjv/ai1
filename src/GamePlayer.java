@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 public class GamePlayer extends NanoHTTPD {
 	
-	private OurAgent agent;
+	private Agent agent;
 
 	public GamePlayer(int port, Agent agent) throws IOException {
 		super(port);
