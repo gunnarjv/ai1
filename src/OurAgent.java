@@ -1,7 +1,4 @@
-import java.util.Collection;
-import java.util.Random;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.util.*;
 
 public class OurAgent implements Agent
 {
@@ -17,7 +14,7 @@ public class OurAgent implements Agent
 			Moving north increases the y coordinate and moving east increases the x coordinate of the robots position.
 			The robot is turned off initially, so don't forget to turn it on.
 		*/
-		Pattern perceptNamePattern = Pattern.compile("\\(\\s*([^\\s]+).*");
+	/*	Pattern perceptNamePattern = Pattern.compile("\\(\\s*([^\\s]+).*");
 		for (String percept:percepts) {
 			Matcher perceptNameMatcher = perceptNamePattern.matcher(percept);
 			if (perceptNameMatcher.matches()) {
@@ -33,16 +30,17 @@ public class OurAgent implements Agent
 			} else {
 				System.err.println("strange percept that does not match pattern: " + percept);
 			}
-		}
+		} */
     }
 
     public String nextAction(Collection<String> percepts) {
-		System.out.print("perceiving:");
+	/*	System.out.print("perceiving:");
 		for(String percept:percepts) {
 			System.out.print("'" + percept + "', ");
 		}
 		System.out.println("");
-		String[] actions = { "TURN_ON", "TURN_OFF", "TURN_RIGHT", "TURN_LEFT", "GO", "SUCK" };
-		return actions[random.nextInt(actions.length)];
+		String[] actions = { "TURN_ON", "TURN_OFF", "TURN_RIGHT", "TURN_LEFT", "GO", "SUCK" }; 
+		return actions[random.nextInt(actions.length)]; */
+    	return "halló gunna";
 	}
 }

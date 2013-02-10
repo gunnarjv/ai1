@@ -1,5 +1,4 @@
-import java.util.Arrays;
-import java.util.Comparator;
+import java.util.*;
 
 public class Environment{
     
@@ -10,6 +9,8 @@ public class Environment{
     
     // Home
     public Point2D home;
+    
+    public boolean at_home(Point2D location)
     {
         return home.equals(location);
     }

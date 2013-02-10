@@ -21,7 +21,7 @@ public class State {
     
     public List<String> get_legal_moves(Environment env)
     {
-        List<String> moves = new ArrayList<String>;
+        List<String> moves = new ArrayList<String>();
         
         if(!ON)
         {
@@ -34,7 +34,7 @@ public class State {
         moves.add("TURN_RIGHT");
         moves.add("TURN_LEFT");
         // We know we must be ON.
-        moves.add("TURN_OFF")
+        moves.add("TURN_OFF");
         
         //If Go is inside of boundaries and not facing an obstacle add GO                
         switch(direction)
@@ -44,7 +44,7 @@ public class State {
                 if(location.y() == env.c)
                 {
                     //Create new point with yCord+1 and checks if there is an obstacle with that coordinate
-                    if(env.obstacles.contains(location.x(), new Point(location.y()+1)))
+                    if(env.obstacles.contains(new Point2D(location.x(),location.y()+1)))
                         break;
                 }
                 else
@@ -61,8 +61,9 @@ public class State {
         return moves;
     }
     
-    public State next_state(String move)
+   /* public State next_state(String move)
     {
         
     }
+    */
 }
