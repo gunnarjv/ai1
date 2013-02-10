@@ -4,7 +4,4 @@ public class Node
     public Node parent;
     public int cost;
     public String move;
-    
-    
-    
 }
