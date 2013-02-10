@@ -11,6 +11,7 @@ public class OurAgent implements Agent
     private Stack<String> route = new Stack<String>();
     private Search search = new BFS();
 
+
     public void init(Collection<String> percepts) {
 		/*
 			- "(SIZE x y)" denoting the size of the environment, where x,y are integers
@@ -86,13 +87,12 @@ public class OurAgent implements Agent
     }
 
     public String nextAction(Collection<String> percepts) {
-	/*	System.out.print("perceiving:");
-		for(String percept:percepts) {
-			System.out.print("'" + percept + "', ");
-		}
+		
+        Random r = new Random();
+
 		System.out.println("");
 		String[] actions = { "TURN_ON", "TURN_OFF", "TURN_RIGHT", "TURN_LEFT", "GO", "SUCK" }; 
-		return actions[random.nextInt(actions.length)]; */
-    	return "hallo gunna";
+    	return actions[r.nextInt(actions.length)];
+    	//return "halló gunna";
 	}
 }
