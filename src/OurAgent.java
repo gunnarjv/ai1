@@ -79,18 +79,7 @@ public class OurAgent implements Agent
                         if(m.matches()) {
                                 env.obstacles.add(new Point2D(Integer.parseInt(m.group(1)), Integer.parseInt(m.group(2))));                           
                         }
-                    }
-                    /*
-                    else if(perceptName.equals("AT OBSTACLE"))
-                    {
-                        Matcher m = Pattern.compile("\\(\\s*AT OBSTACLE\\s+([0-9]+)\\s+([0-9]+)\\s*\\)").matcher(percept);
-                        if (m.matches()) {
-                                System.out.println("AT OBSTACLE start.");
-                                env.obstacles.add(new Point2D(Integer.parseInt(m.group(1)), Integer.parseInt(m.group(2))));
-                                System.out.println("AT OBSTACLE end.");
-                        }
-                    }  
-                    */              
+                    }              
                     else 
                     {
 

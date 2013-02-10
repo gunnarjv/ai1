@@ -74,17 +74,18 @@ public class BFS implements Search
 
       Environment env = new Environment();
       List<Point2D> dirtlist = new ArrayList<Point2D>();
+      List<Point2D> obstaclelist = new ArrayList<Point2D>();
 
 
-      dirtlist.add(new Point2D(0, 1));
-      dirtlist.add(new Point2D(0, 0));
+      obstaclelist.add(new Point2D(1, 1));
+      dirtlist.add(new Point2D(1, 1));
 
+      State state = new State(false, new Point2D(1, 1), 3, dirtlist);
 
-      State state = new State(false, new Point2D(2, 2), 3, dirtlist);
-
-      env.r = 3;
-      env.c = 3;
-      env.home = new Point2D(2, 2);
+      env.r = 2;
+      env.c = 2;
+      env.home = new Point2D(1, 1);
+      env.obstacles = obstaclelist;
 
       Search searcher = new BFS(env);
       Stack<String> moves = searcher.search(state);
