@@ -2,8 +2,9 @@ import java.util.*;
 
 public class OurAgent implements Agent
 {
-    private Environment env;
-    private Stack<String> route;
+    private Environment env = new Environment();
+    private State state = new State();
+    private Stack<String> route = new Stack<String>();
 
     public void init(Collection<String> percepts) {
 		/*
@@ -14,7 +15,7 @@ public class OurAgent implements Agent
 			Moving north increases the y coordinate and moving east increases the x coordinate of the robots position.
 			The robot is turned off initially, so don't forget to turn it on.
 		*/
-	/*	Pattern perceptNamePattern = Pattern.compile("\\(\\s*([^\\s]+).*");
+		Pattern perceptNamePattern = Pattern.compile("\\(\\s*([^\\s]+).*");
 		for (String percept:percepts) {
 			Matcher perceptNameMatcher = perceptNamePattern.matcher(percept);
 			if (perceptNameMatcher.matches()) {
@@ -22,15 +23,61 @@ public class OurAgent implements Agent
 				if (perceptName.equals("HOME")) {
 					Matcher m = Pattern.compile("\\(\\s*HOME\\s+([0-9]+)\\s+([0-9]+)\\s*\\)").matcher(percept);
 					if (m.matches()) {
-						System.out.println("robot is at " + m.group(1) + "," + m.group(2));
+                        env.home = new Point2D(m.group(1), m.group(2))
 					}
-				} else {
-					System.out.println("other percept:" + percept);
 				}
-			} else {
+                else if(perceptName.equals("SIZE"))
+                {
+    				Matcher m = Pattern.compile("\\(\\s*SIZE\\s+([0-9]+)\\s+([0-9]+)\\s*\\)").matcher(percept);
+					if (m.matches()) {
+                        env.c = m.group(1);
+                        env.r = m.group(2);
+					}
+                }
+                else if(perceptName.equals("ORIENTATION"))
+                {
+    				Matcher m = Pattern.compile("\\(\\s*ORIENTATION\\s+([0-9]+)\\s*\\)").matcher(percept);
+                    switch(m.group(1))
+                    {
+                        case "NORTH":
+                            state.direction = 0;
+                            break;
+                        case "EAST":
+                            state.direction = 1;
+                            break;
+                        case "SOUTH":
+                            state.direction = 2;                            
+                            break;
+                        case "WEST":
+                            state.direction = 3;
+                            break;
+                    }
+				}
+                else if(perceptName.equals("AT"))
+                {
+    				Matcher m = Pattern.compile("\\(\\s*AT\\s+([0-9]+)\\s+([0-9]+)\\s*\\)").matcher(percept);
+					if (m.matches()) {
+                            state.dirts.add(new Point2D(m.group(1), m.group(2));
+					}
+                }
+                else 
+                {
+                    System.out.println("other percept:" + percept);
+                }
+			}
+            else
+            {
 				System.err.println("strange percept that does not match pattern: " + percept);
 			}
-		} */
+		}
+        
+        /***********************Call algorithms and begin search***************************/
+        
+        
+        
+        
+        
+        
     }
 
     public String nextAction(Collection<String> percepts) {
