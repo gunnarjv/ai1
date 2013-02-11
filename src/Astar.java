@@ -109,7 +109,7 @@ public class Astar implements Search
 
 		while(tempDirts.size() != 0)
 		{
-			for(Point2D p: n.state.dirts)
+			for(Point2D p: tempDirts)
 			{
 				if(nearestDirt == null)
 					nearestDirt = p;
