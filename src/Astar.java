@@ -24,21 +24,20 @@ public class Astar implements Search
 			return new Stack<String>();
 
 	   f.add(root);
-
+	   int i = 0;
 	   while(f.peek() != null)
 	   {
+		Node n = f.poll();
+		State s = n.state;
 
-			Node n = f.poll();
-			State s = n.state;
-
-		  if(is_goal(n.state)) return path(n);
+		if(is_goal(n.state)) return path(n);
 		
 
 			for (String m : s.get_legal_moves(env))
 			{
 				Node child = new Node(s.next_state(m), n, m);
-                evalCost(child, n.cost);
-                child.fCost = child.cost + heuristicEstimate(child);
+                		evalCost(child, n.cost);
+                		child.fCost = child.cost + heuristicEstimate(child);
 
 				f.add(child);
 			}
@@ -95,6 +94,9 @@ public class Astar implements Search
 
   private int heuristicEstimate(Node n)
   {
+  	//return n.state.dirts.size();
+
+  
     //Find nearest dirt
     Point2D nearestDirt = null;
     for(Point2D p: n.state.dirts)
@@ -117,7 +119,7 @@ public class Astar implements Search
         return manhattan(env.home, n.state.location);
 
     //Calculate manhattan to dirt from position of n
-    return manhattan(nearestDirt, n.state.location);
+    return manhattan(nearestDirt, n.state.location) + n.state.dirts.size();
   }
 
   private int manhattan(Point2D p1, Point2D p2)
@@ -126,6 +128,7 @@ public class Astar implements Search
     int yDist = Math.abs(p1.y() - p2.y());
 
     return xDist + yDist;
+    
 
   }
 
@@ -136,15 +139,15 @@ public class Astar implements Search
 	  List<Point2D> obstaclelist = new ArrayList<Point2D>();
 
 
-	 obstaclelist.add(new Point2D(1, 1));
-	 obstaclelist.add(new Point2D(1, 3));
-	  dirtlist.add(new Point2D(1, 2));
-      dirtlist.add(new Point2D(3, 3));
+	obstaclelist.add(new Point2D(0, 1));
+	obstaclelist.add(new Point2D(0, 2));
+	dirtlist.add(new Point2D(2, 2));
+      	//dirtlist.add(new Point2D(3, 3));
 
 	  State state = new State(false, new Point2D(0, 0), 3, dirtlist);
 
-	  env.r = 4;
-	  env.c = 4;
+	  env.r = 3;
+	  env.c = 3;
 	  env.home = new Point2D(0, 0);
 	  env.obstacles = obstaclelist;
 
