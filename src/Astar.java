@@ -27,9 +27,10 @@ public class Astar implements Search
 		{
 			i++;
 			Node n = f.poll();
-		System.out.println(n.fCost);
+		//System.out.println(n.fCost);
 			State s = n.state;
 			if(is_goal(n.state)){
+				System.out.println(i);
 				return path(n);
 			}
 			
@@ -68,7 +69,7 @@ public class Astar implements Search
 	   while(next_node.move != null) //While we are not asking root
 	   {
 	   	strat.push(next_node.move);
-                System.out.println("COOOOOST" + next_node.fCost + "  :  " + next_node.move);
+                //System.out.println("COOOOOST" + next_node.fCost + "  :  " + next_node.move);
 	   	next_node = next_node.parent;
 	   }
 
@@ -100,7 +101,7 @@ public class Astar implements Search
 		State s = n.state;
 		// Create new list so we can remove from it.
 		List<Point2D> tempDirts = new ArrayList<Point2D>();
-		for(Point2D d : s.dirts) newDirts.add(new Point2D(d.x(), d.y()));
+		for(Point2D d : s.dirts) tempDirts.add(new Point2D(d.x(), d.y()));
 	    //Find nearest dirt
 
 		int manhattan_total = 0;
@@ -130,7 +131,6 @@ public class Astar implements Search
 		if(nearestDirt == null)
 			return manhattan(env.home, n.state.location) /*+ turning_cost*/;
         
-		Boolean didWeSuck = newDirts.remove(newPoint);
 
 /*        int turning_cost = 0;
         if(nearestDirt.x() > n.state.location.x() && n.state.direction == 3)
