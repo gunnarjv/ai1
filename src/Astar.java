@@ -1,4 +1,5 @@
 import java.util.*;
+import java.lang.Math;
 
 public class Astar implements Search
 {
@@ -13,7 +14,7 @@ public class Astar implements Search
 	public Stack<String> search(State state)
 	{
 	   
-	   PriorityQueue<Node> f = new PriorityQueue<Node>();
+	   PriorityQueue<Node> f = new PriorityQueue<Node>(20, Node.HeuristicCompare);
 
 	   Node root = new Node(state, null, null);
 	   root.cost = 0;
@@ -36,7 +37,8 @@ public class Astar implements Search
 			for (String m : s.get_legal_moves(env))
 			{
 				Node child = new Node(s.next_state(m), n, m);
-			evalCost(child, n.cost);
+                evalCost(child, n.cost);
+                child.fCost = child.cost + heuristicEstimate(child);
 
 				f.add(child);
 			}
@@ -90,6 +92,38 @@ public class Astar implements Search
 			m.cost = 1 + parentCost;
 	  }
 	}
+
+  private int heuristicEstimate(Node n)
+  {
+    //Find nearest dirt
+    Point2D nearestDirt = null;
+    for(Point2D p: n.state.dirts)
+    {
+      if(nearestDirt == null)
+        nearestDirt = p;
+      else
+      {
+        //Compare nearestDirt to other dirts and 
+        //if we find dirt with shorter manhattan make that new nearestDirt
+        if(manhattan(p, n.state.location) < manhattan(nearestDirt, n.state.location))
+        {
+          nearestDirt = p;
+        }
+      }
+    }
+
+    //Calculate manhattan to dirt from position of n
+    return manhattan(nearestDirt, n.state.location);
+  }
+
+  private int manhattan(Point2D p1, Point2D p2)
+  {
+    int xDist = Math.abs(p1.x() - p2.x());
+    int yDist = Math.abs(p1.y() - p2.y());
+
+    return xDist + yDist;
+
+  }
 
 	public static void main(String args[]) {
 
