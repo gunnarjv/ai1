@@ -106,14 +106,14 @@ public class Astar implements Search
 		for(Point2D p: tempDirts)
 		{
 			manhattan_total += manhattan(nearestDirt, current_location);
-		}
+		} // Gunnar was here
         
 		manhattan_total += manhattan(env.home, current_location);
 
    		//Calculate manhattan to home if no dirt left
 		if(nearestDirt == null)
 			return manhattan_total /*+ turning_cost*/;
-		
+
 /*        int turning_cost = 0;
         if(nearestDirt.x() > n.state.location.x() && n.state.direction == 3)
             turning_cost++;
