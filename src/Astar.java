@@ -35,14 +35,16 @@ public class Astar implements Search
 			}
 			
 
+
 			for (String m : s.get_legal_moves(env))
 			{
 				i++;
+				if(i % 1000 == 0) System.out.println(f.size());
 				Node child = new Node(s.next_state(m), n, m);
 				evalCost(child, n.cost);
 				child.fCost = child.cost + heuristicEstimate(child);
 
-				f.add(child);
+				if(!f.contains(child)) f.add(child);
 			}
 		}
 	   // We should never get here.
