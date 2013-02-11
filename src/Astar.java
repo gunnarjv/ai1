@@ -99,34 +99,23 @@ public class Astar implements Search
 	private int heuristicEstimate(Node n)
 	{
 		State s = n.state;
-		// Create new list so we can remove from it.
-		int manhattan_total = 0;
-		Point2D current_location = s.location;
+		no_dirts = tempDirts.size();
 
-		for(Point2D p: tempDirts)
+		Graph G = new Graph(no_dirts);
+
+		Point2D dirt_array[] = s.dirts.toArray();
+
+		for(int i = 0; i < no_dirts; i++)
 		{
-			manhattan_total += manhattan(p, current_location);
+			for(int j = i+1; j < no_dirts; j++)
+			{
+				Edge edge = new Edge(i, j, manhattan(dirt_array[i], dirt_array[j]));
+				G.add(edge);
+			}
 		}
-        
-		manhattan_total += manhattan(env.home, current_location);
-
-   		//Calculate manhattan to home if no dirt left
-		if(s.dirts.size() == 0)
-			return manhattan_total /*+ turning_cost*/;
-
-/*        int turning_cost = 0;
-        if(nearestDirt.x() > n.state.location.x() && n.state.direction == 3)
-            turning_cost++;
-        else if(nearestDirt.x() < n.state.location.x() && n.state.direction == 1)
-            turning_cost++;
-        else if(nearestDirt.y() > n.state.location.y() && n.state.direction == 2)
-            turning_cost++;
-        else if(nearestDirt.y() < n.state.location.y() && n.state.direction == 0)
-            turning_cost++;
-*/
-
-    //Calculate manhattan to dirt from position of n
-		return manhattan_total + n.state.dirts.size() /*+ turning_cost*/;
+		
+		PrimMST prim = new PrimMST(G);
+		return prim.weight();
 	}
 
 	private int manhattan(Point2D p1, Point2D p2)
