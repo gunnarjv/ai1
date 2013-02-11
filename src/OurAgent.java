@@ -112,7 +112,7 @@ public class OurAgent implements Agent
 
 	//Initialize the searching algorithm and find optimal path.
 	state.location = new Point2D(env.home.x(), env.home.y());
-	Search searcher = new Uniform(env);
+	Search searcher = new Astar(env);
 	route = searcher.search(state);
 	return;
     }

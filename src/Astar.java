@@ -112,6 +112,10 @@ public class Astar implements Search
       }
     }
 
+    //Calculate manhattan to home if no dirt left
+    if(nearestDirt == null)
+        return manhattan(env.home, n.state.location);
+
     //Calculate manhattan to dirt from position of n
     return manhattan(nearestDirt, n.state.location);
   }
