@@ -11,7 +11,7 @@ public class Astar implements Search
 		this.env = lu_env;
 	}
 
-	public Stack<String> search(State state)
+	public java.util.Stack<String> search(State state)
 	{
 		PriorityQueue<Node> f = new PriorityQueue<Node>(20, Node.HeuristicCompare);
 
@@ -19,7 +19,7 @@ public class Astar implements Search
 		root.cost = 0;
 
 	  	// If the initial state is goal we are done.
-		if(is_goal(root.state)) return new Stack<String>();
+		if(is_goal(root.state)) return new java.util.Stack<String>();
 
 		f.add(root);
 		int i = 0;
@@ -49,7 +49,7 @@ public class Astar implements Search
 		System.out.println("Something has gone awry! The search returned no solution!");
 		System.out.println("Exiting.");
 		System.exit(1);
-		return new Stack<String>();
+		return new java.util.Stack<String>();
 	}
 
 	private boolean is_goal(State state)
@@ -59,9 +59,9 @@ public class Astar implements Search
 		return false;
 	}
 
-	private Stack<String> path(Node goal)
+	private java.util.Stack<String> path(Node goal)
 	{
-		Stack<String> strat = new Stack<String>();
+		java.util.Stack<String> strat = new java.util.Stack<String>();
 
 		strat.push(goal.move);
 		Node next_node = goal.parent;
@@ -99,23 +99,23 @@ public class Astar implements Search
 	private int heuristicEstimate(Node n)
 	{
 		State s = n.state;
-		no_dirts = tempDirts.size();
+		int no_dirts = s.dirts.size();
+		EdgeWeightedGraph G = new EdgeWeightedGraph(no_dirts);
 
-		Graph G = new Graph(no_dirts);
-
-		Point2D dirt_array[] = s.dirts.toArray();
+		Point2D d[] = new Point2D[1];
+		Point2D dirt_array[] = s.dirts.toArray(d);
 
 		for(int i = 0; i < no_dirts; i++)
 		{
 			for(int j = i+1; j < no_dirts; j++)
 			{
 				Edge edge = new Edge(i, j, manhattan(dirt_array[i], dirt_array[j]));
-				G.add(edge);
+				G.addEdge(edge);
 			}
 		}
 		
 		PrimMST prim = new PrimMST(G);
-		return prim.weight();
+		return (int)prim.weight();
 	}
 
 	private int manhattan(Point2D p1, Point2D p2)
@@ -148,7 +148,7 @@ public class Astar implements Search
 		env.obstacles = obstaclelist;
 
 		Search searcher = new Astar(env);
-		Stack<String> moves = searcher.search(state);
+		java.util.Stack<String> moves = searcher.search(state);
 
 		while(!moves.isEmpty()) {
 			String s = moves.pop();

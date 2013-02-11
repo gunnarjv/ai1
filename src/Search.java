@@ -2,5 +2,5 @@ import java.util.*;
 
 public interface Search
 {
-	public Stack<String> search(State state);
+	public java.util.Stack<String> search(State state);
 }

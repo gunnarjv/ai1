@@ -8,7 +8,7 @@ public class OurAgent implements Agent
 {
     private Environment env = new Environment();
     private State state = new State();
-    private Stack<String> route = new Stack<String>();
+    private java.util.Stack<String> route = new java.util.Stack<String>();
     //private Search search = new BFS(env);
 
 

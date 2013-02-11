@@ -10,7 +10,7 @@ public class Uniform implements Search
       this.env = lu_env;
     }
 
-    public Stack<String> search(State state)
+    public java.util.Stack<String> search(State state)
     {
 	     PriorityQueue<Node> f = new PriorityQueue<Node>();
 
@@ -19,7 +19,7 @@ public class Uniform implements Search
 
        // If the initial state is goal we are done.
        if(is_goal(root.state))
-		return new Stack<String>();
+		return new java.util.Stack<String>();
 
        f.add(root);
        int i = 0;
@@ -46,7 +46,7 @@ public class Uniform implements Search
        System.out.println("Something has gone awry! The search returned no solution!");
        System.out.println("Exiting.");
        System.exit(1);
-       return new Stack<String>();
+       return new java.util.Stack<String>();
     }
 
     private boolean is_goal(State state)
@@ -56,9 +56,9 @@ public class Uniform implements Search
        return false;
     }
 
-    private Stack<String> path(Node goal)
+    private java.util.Stack<String> path(Node goal)
     {
-       Stack<String> strat = new Stack<String>();
+       java.util.Stack<String> strat = new java.util.Stack<String>();
 
        strat.push(goal.move);
        Node next_node = goal.parent;
@@ -111,7 +111,7 @@ public class Uniform implements Search
       env.obstacles = obstaclelist;
 
       Search searcher = new Uniform(env);
-      Stack<String> moves = searcher.search(state);
+      java.util.Stack<String> moves = searcher.search(state);
 
       while(!moves.isEmpty()) {
 	String s = moves.pop();
