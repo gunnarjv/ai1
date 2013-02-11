@@ -97,34 +97,42 @@ public class Astar implements Search
 
 	private int heuristicEstimate(Node n)
 	{
-  	//return n.state.dirts.size();
+		State s = n.state;
+		// Create new list so we can remove from it.
+		List<Point2D> tempDirts = new ArrayList<Point2D>();
+		for(Point2D d : s.dirts) newDirts.add(new Point2D(d.x(), d.y()));
+	    //Find nearest dirt
 
-
-    //Find nearest dirt
+		int manhattan_total = 0;
 		Point2D nearestDirt = null;
-		for(Point2D p: n.state.dirts)
+		Point2D current_location = s.location;
+
+		while(tempDirts.size() != 0)
 		{
-			if(nearestDirt == null)
-				nearestDirt = p;
-			else
+			for(Point2D p: n.state.dirts)
 			{
-        //Compare nearestDirt to other dirts and 
-        //if we find dirt with shorter manhattan make that new nearestDirt
-				if(manhattan(p, n.state.location) < manhattan(nearestDirt, n.state.location))
-				{
+				if(nearestDirt == null)
 					nearestDirt = p;
+				else
+				{
+					if(manhattan(p, n.state.location) < manhattan(nearestDirt, n.state.location))
+					{
+						nearestDirt = p;
+					}
 				}
 			}
+			manhattan_total += manhattan(nearestDirt, current_location);
+			current_location = nearestDirt;
+			tempDirts.remove(nearestDirt);
 		}
-
-        int turning_cost = 0;
-
-        
-    //Calculate manhattan to home if no dirt left
+	        
+   		//Calculate manhattan to home if no dirt left
 		if(nearestDirt == null)
-			return manhattan(env.home, n.state.location) + turning_cost;
+			return manhattan(env.home, n.state.location) /*+ turning_cost*/;
         
+		Boolean didWeSuck = newDirts.remove(newPoint);
 
+/*        int turning_cost = 0;
         if(nearestDirt.x() > n.state.location.x() && n.state.direction == 3)
             turning_cost++;
         else if(nearestDirt.x() < n.state.location.x() && n.state.direction == 1)
@@ -133,10 +141,10 @@ public class Astar implements Search
             turning_cost++;
         else if(nearestDirt.y() < n.state.location.y() && n.state.direction == 0)
             turning_cost++;
-
+*/
 
     //Calculate manhattan to dirt from position of n
-		return manhattan(nearestDirt, n.state.location) + n.state.dirts.size() + turning_cost;
+		return manhattan_total + n.state.dirts.size() /*+ turning_cost*/;
 	}
 
 	private int manhattan(Point2D p1, Point2D p2)
