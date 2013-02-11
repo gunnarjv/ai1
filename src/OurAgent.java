@@ -112,24 +112,13 @@ public class OurAgent implements Agent
 
         //Initialize the searching algorithm and find optimal path.
         state.location = new Point2D(env.home.x(), env.home.y());
-        Search searcher = new BFS(env);
+        Search searcher = new Uniform(env);
         route = searcher.search(state);
         return;
     }
 
     public String nextAction(Collection<String> percepts) {
-		
-        System.out.println("Is the stack empty? - "  + route.empty());
-       
-        int n = 0;
-
-        while(n < 25000000) {
-             n++;
-        }
-
-        if(!route.empty())        
+	        
     	   return route.pop();
-        else
-            return "TURN_OFF";
 	}
 }

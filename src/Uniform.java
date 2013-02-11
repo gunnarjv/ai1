@@ -12,8 +12,7 @@ public class Uniform implements Search
 
     public Stack<String> search(State state)
     {
-	     Queue<Node> f = new PriorityQueue<Node>();
-       List<Node> explored = new ArrayList<Node>();
+	     PriorityQueue<Node> f = new PriorityQueue<Node>();
 
        Node root = new Node(state, null, null);
        root.cost = 0;
@@ -24,20 +23,22 @@ public class Uniform implements Search
 
        f.add(root);
        int i = 0;
-
        while(f.peek() != null)
        {
-          for(Node n : f) System.out.print(n.cost + " - ");
-          System.out.println("");
+          i++;
        		Node n = f.poll();
        		State s = n.state;
 
-          if(is_goal(n.state)) return path(n);
+          if(is_goal(n.state)){
+            System.out.println("Cost: " + n.cost);
+           return path(n);
+        }
 
        		for (String m : s.get_legal_moves(env))
        		{
        			Node child = new Node(s.next_state(m), n, m);
             evalCost(child, n.cost);
+
 	       		f.add(child);
        		}
        }
@@ -76,7 +77,7 @@ public class Uniform implements Search
       switch(m.move) {
 
         case "TURN_OFF":
-          if(m.state.location == env.home)
+          if(env.at_home(m.state.location))
               m.cost = 1 + (15 * m.state.dirts.size()) + parentCost;
           else
               m.cost = 100 + (15 * m.state.dirts.size()) + parentCost;
@@ -98,14 +99,15 @@ public class Uniform implements Search
       List<Point2D> obstaclelist = new ArrayList<Point2D>();
 
 
-      obstaclelist.add(new Point2D(0, 1));
-      dirtlist.add(new Point2D(0, 0));
+     obstaclelist.add(new Point2D(1, 1));
+     // obstaclelist.add(new Point2D(1, 1));
+      dirtlist.add(new Point2D(1, 2));
 
-      State state = new State(false, new Point2D(1, 1), 3, dirtlist);
+      State state = new State(false, new Point2D(0, 0), 3, dirtlist);
 
-      env.r = 2;
-      env.c = 2;
-      env.home = new Point2D(1, 1);
+      env.r = 3;
+      env.c = 3;
+      env.home = new Point2D(0, 0);
       env.obstacles = obstaclelist;
 
       Search searcher = new Uniform(env);

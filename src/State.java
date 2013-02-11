@@ -75,13 +75,6 @@ public State(){
           
         return moves;
     }
-/*    
-TURN_ON:
-TURN_RIGHT, TURN_LEFT
-GO:
-SUCK:
-TURN_OFF
-  */  
     
    public State next_state(String move)
     {
