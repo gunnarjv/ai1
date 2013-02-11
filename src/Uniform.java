@@ -19,28 +19,28 @@ public class Uniform implements Search
 
        // If the initial state is goal we are done.
        if(is_goal(root.state))
-       		return new Stack<String>();
+		return new Stack<String>();
 
        f.add(root);
        int i = 0;
        while(f.peek() != null)
        {
-          i++;
-       		Node n = f.poll();
-       		State s = n.state;
+	  i++;
+		Node n = f.poll();
+		State s = n.state;
 
-          if(is_goal(n.state)){
-            System.out.println("Cost: " + n.cost);
-           return path(n);
-        }
+	  if(is_goal(n.state)){
+	    System.out.println("Cost: " + n.cost);
+	   return path(n);
+	}
 
-       		for (String m : s.get_legal_moves(env))
-       		{
-       			Node child = new Node(s.next_state(m), n, m);
-            evalCost(child, n.cost);
+		for (String m : s.get_legal_moves(env))
+		{
+			Node child = new Node(s.next_state(m), n, m);
+	    evalCost(child, n.cost);
 
-	       		f.add(child);
-       		}
+			f.add(child);
+		}
        }
        // We should never get here.
        System.out.println("Something has gone awry! The search returned no solution!");
@@ -52,7 +52,7 @@ public class Uniform implements Search
     private boolean is_goal(State state)
     {
        if(state.dirts.isEmpty() && env.at_home(state.location) && !state.ON)
-       		return true;
+		return true;
        return false;
     }
 
@@ -65,8 +65,8 @@ public class Uniform implements Search
 
        while(next_node.move != null) //While we are not asking root
        {
-       		strat.push(next_node.move);
-       		next_node = next_node.parent;
+		strat.push(next_node.move);
+		next_node = next_node.parent;
        }
 
        return strat;
@@ -76,19 +76,19 @@ public class Uniform implements Search
 
       switch(m.move) {
 
-        case "TURN_OFF":
-          if(env.at_home(m.state.location))
-              m.cost = 1 + (15 * m.state.dirts.size()) + parentCost;
-          else
-              m.cost = 100 + (15 * m.state.dirts.size()) + parentCost;
-          break;
-        case "SUCK":
-          if(!m.state.dirts.contains(m.state.location)) {
-            m.cost = 5 + parentCost;
-            break;
-          }
-        default:
-            m.cost = 1 + parentCost;
+	case "TURN_OFF":
+	  if(env.at_home(m.state.location))
+	      m.cost = 1 + (15 * m.state.dirts.size()) + parentCost;
+	  else
+	      m.cost = 100 + (15 * m.state.dirts.size()) + parentCost;
+	  break;
+	case "SUCK":
+	  if(!m.state.dirts.contains(m.state.location)) {
+	    m.cost = 5 + parentCost;
+	    break;
+	  }
+	default:
+	    m.cost = 1 + parentCost;
       }
     }
 
@@ -114,8 +114,8 @@ public class Uniform implements Search
       Stack<String> moves = searcher.search(state);
 
       while(!moves.isEmpty()) {
-        String s = moves.pop();
-        System.out.println(s);
+	String s = moves.pop();
+	System.out.println(s);
       }
     }
 
