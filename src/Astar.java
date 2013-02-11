@@ -102,38 +102,20 @@ public class Astar implements Search
 	{
 		State s = n.state;
 		// Create new list so we can remove from it.
-		List<Point2D> tempDirts = new ArrayList<Point2D>();
-		for(Point2D d : s.dirts) tempDirts.add(new Point2D(d.x(), d.y()));
-	    //Find nearest dirt
-
 		int manhattan_total = 0;
-		Point2D nearestDirt = null;
 		Point2D current_location = s.location;
 
-		while(tempDirts.size() != 0)
+		for(Point2D p: tempDirts)
 		{
-			for(Point2D p: tempDirts)
-			{
-				if(nearestDirt == null)
-					nearestDirt = p;
-				else
-				{
-					if(manhattan(p, current_location) < manhattan(nearestDirt, current_location))
-					{
-						nearestDirt = p;
-					}
-				}
-			}
 			manhattan_total += manhattan(nearestDirt, current_location);
-			current_location = nearestDirt;
-			tempDirts.remove(nearestDirt);
 		}
-	        
+        
+		manhattan_total += manhattan(env.home, current_location);
+
    		//Calculate manhattan to home if no dirt left
 		if(nearestDirt == null)
-			return manhattan(env.home, n.state.location) /*+ turning_cost*/;
-        
-
+			return manhattan_total /*+ turning_cost*/;
+		
 /*        int turning_cost = 0;
         if(nearestDirt.x() > n.state.location.x() && n.state.direction == 3)
             turning_cost++;
