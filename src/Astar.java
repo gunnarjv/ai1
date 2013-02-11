@@ -27,7 +27,7 @@ public class Astar implements Search
 		{
 			i++;
 			Node n = f.poll();
-		//System.out.println(n.fCost);
+		System.out.println(n.fCost);
 			State s = n.state;
 			if(is_goal(n.state)){
 				return path(n);

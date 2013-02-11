@@ -119,6 +119,7 @@ public class OurAgent implements Agent
 
     public String nextAction(Collection<String> percepts) {
 		
+        if(route.empty()) return null;
 	   return route.pop();
 	}
 }
