@@ -105,16 +105,16 @@ public class Astar implements Search
 		int manhattan_total = 0;
 		Point2D current_location = s.location;
 
-		for(Point2D p: tempDirts)
+		for(Point2D p: s.dirts)
 		{
-			manhattan_total += manhattan(nearestDirt, current_location);
+			manhattan_total += manhattan(p, current_location);
 		}
         
 		manhattan_total += manhattan(env.home, current_location);
 
    		//Calculate manhattan to home if no dirt left
-		if(nearestDirt == null)
-			return manhattan_total /*+ turning_cost*/;
+		if(s.dirts.size() == 0)
+			return manhattan(s.location, env.home) /*+ turning_cost*/;
 		
 /*        int turning_cost = 0;
         if(nearestDirt.x() > n.state.location.x() && n.state.direction == 3)

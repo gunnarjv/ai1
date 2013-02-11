@@ -32,7 +32,7 @@ public class Node implements Comparable<Node>
 		if(other == null) return false;
 		if(other.getClass() != this.getClass()) return false;
 		Node that = (Node) other;
-		if(!this.state.equals(that.state) || this.move != that.move) return false;
+		if(!this.state.equals(that.state) || !this.move.equals(that.move)) return false;
 		return this.fCost > that.fCost;
 
 	}
