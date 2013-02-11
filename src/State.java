@@ -35,13 +35,13 @@ public State(){
 	}
 	
 	// Suck, turning is always legal.
-	if(dirts.contains(location)) moves.add("SUCK");
+	moves.add("SUCK");
 	
 	moves.add("TURN_RIGHT");
 	moves.add("TURN_LEFT");
 	// We know we must be ON.
 
-	if(env.home.equals(location) && dirts.size() == 0) moves.add("TURN_OFF");
+	moves.add("TURN_OFF");
 	
 	//If Go is inside of boundaries and not facing an obstacle add GO                
 	switch(direction)

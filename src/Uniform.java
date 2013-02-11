@@ -83,7 +83,7 @@ public class Uniform implements Search
 	      m.cost = 100 + (15 * m.state.dirts.size()) + parentCost;
 	  break;
 	case "SUCK":
-	  if(!m.state.dirts.contains(m.state.location)) {
+	  if(!m.parent.state.dirts.contains(m.state.location)) {
 	    m.cost = 5 + parentCost;
 	    break;
 	  }

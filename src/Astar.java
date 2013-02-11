@@ -13,7 +13,6 @@ public class Astar implements Search
 
 	public Stack<String> search(State state)
 	{
-
 		PriorityQueue<Node> f = new PriorityQueue<Node>(20, Node.HeuristicCompare);
 
 		Node root = new Node(state, null, null);
@@ -31,7 +30,6 @@ public class Astar implements Search
 		//System.out.println(n.fCost);
 			State s = n.state;
 			if(is_goal(n.state)){
-				System.out.println("Total nodes visited: " + i);
 				return path(n);
 			}
 			
@@ -70,6 +68,7 @@ public class Astar implements Search
 	   while(next_node.move != null) //While we are not asking root
 	   {
 	   	strat.push(next_node.move);
+                System.out.println("COOOOOST" + next_node.fCost + "  :  " + next_node.move);
 	   	next_node = next_node.parent;
 	   }
 
@@ -87,7 +86,7 @@ public class Astar implements Search
 				m.cost = 100 + (15 * m.state.dirts.size()) + parentCost;
 			break;
 			case "SUCK":
-			if(!m.state.dirts.contains(m.state.location)) {
+			if(!m.parent.state.dirts.contains(m.state.location)) {
 				m.cost = 5 + parentCost;
 				break;
 			}
@@ -118,12 +117,26 @@ public class Astar implements Search
 			}
 		}
 
+        int turning_cost = 0;
+
+        
     //Calculate manhattan to home if no dirt left
 		if(nearestDirt == null)
-			return manhattan(env.home, n.state.location);
+			return manhattan(env.home, n.state.location) + turning_cost;
+        
+
+        if(nearestDirt.x() > n.state.location.x() && n.state.direction == 3)
+            turning_cost++;
+        else if(nearestDirt.x() < n.state.location.x() && n.state.direction == 1)
+            turning_cost++;
+        else if(nearestDirt.y() > n.state.location.y() && n.state.direction == 2)
+            turning_cost++;
+        else if(nearestDirt.y() < n.state.location.y() && n.state.direction == 0)
+            turning_cost++;
+
 
     //Calculate manhattan to dirt from position of n
-		return manhattan(nearestDirt, n.state.location) + n.state.dirts.size();
+		return manhattan(nearestDirt, n.state.location) + n.state.dirts.size() + turning_cost;
 	}
 
 	private int manhattan(Point2D p1, Point2D p2)
@@ -143,15 +156,15 @@ public class Astar implements Search
 		List<Point2D> obstaclelist = new ArrayList<Point2D>();
 
 
-		obstaclelist.add(new Point2D(0, 1));
-		obstaclelist.add(new Point2D(0, 2));
-		dirtlist.add(new Point2D(2, 2));
+		obstaclelist.add(new Point2D(1, 3));
+		obstaclelist.add(new Point2D(1, 1));
+		dirtlist.add(new Point2D(3, 3));
       	//dirtlist.add(new Point2D(3, 3));
 
 		State state = new State(false, new Point2D(0, 0), 3, dirtlist);
 
-		env.r = 3;
-		env.c = 3;
+		env.r = 4;
+		env.c = 4;
 		env.home = new Point2D(0, 0);
 		env.obstacles = obstaclelist;
 
