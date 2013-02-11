@@ -100,13 +100,16 @@ public class Uniform implements Search
 
 
      obstaclelist.add(new Point2D(1, 1));
+     obstaclelist.add(new Point2D(0, 1))
+     obstaclelist.add(new Point2D(2, 1))
      // obstaclelist.add(new Point2D(1, 1));
       dirtlist.add(new Point2D(1, 2));
+      dirtlist.add(new Point2D(3, 3));
 
       State state = new State(false, new Point2D(0, 0), 3, dirtlist);
 
-      env.r = 3;
-      env.c = 3;
+      env.r = 4;
+      env.c = 4;
       env.home = new Point2D(0, 0);
       env.obstacles = obstaclelist;
 

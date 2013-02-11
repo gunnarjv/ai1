@@ -28,12 +28,13 @@ public class Node implements Comparable<Node>
 
 	public boolean equals(Object other) {
 		
+		//System.out.println("Whoop");
 		if(other == this) return true;
 		if(other == null) return false;
 		if(other.getClass() != this.getClass()) return false;
 		Node that = (Node) other;
 		if(!this.state.equals(that.state) || !this.move.equals(that.move)) return false;
-		return this.fCost > that.fCost;
+		return this.fCost < that.fCost;
 
 	}
 

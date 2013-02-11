@@ -136,12 +136,26 @@ public class State
 
 	public boolean equals(Object other) {
 
+		//System.out.println("Whoop");
 		if(other == this) return true;
 		if(other == null) return false;
 		if(other.getClass() != this.getClass()) return false;
 		State that  = (State) other;
-		return this.ON == that.ON && this.location == that.location && this.direction == that.direction && this.dirts.equals(that.dirts);
-		
+		if(this.ON == that.ON && this.location.equals(that.location) && this.direction == that.direction && this.dirts.equals(that.dirts))
+		{/*
+			System.out.println("This on " + this.ON + " That on " + that.ON + " This dir " + this.direction + " that dir " + that.direction);
+			System.out.println("This loc " + this.location.x() + " - " + this.location.y());
+			System.out.println("That loc " + that.location.x() + " - " + that.location.y());
+			System.out.print("This dirts: ");
+			for(Point2D p : this.dirts)
+				System.out.println(p.x() + " - " + p.y());
+			System.out.print("That dirts: ");
+			for(Point2D p : that.dirts)
+				System.out.println(p.x() + " - " + p.y());
+		*/
+			return true;
+		}
+		return false;
 	}
 
 }

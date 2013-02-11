@@ -38,13 +38,14 @@ public class Astar implements Search
 
 			for (String m : s.get_legal_moves(env))
 			{
-				i++;
-				if(i % 1000 == 0) System.out.println(f.size());
+
+				//if(i % 100 == 0) System.out.println(f.size());
 				Node child = new Node(s.next_state(m), n, m);
 				evalCost(child, n.cost);
 				child.fCost = child.cost + heuristicEstimate(child);
 
-				if(!f.contains(child)) f.add(child);
+				//if(!f.contains(child)) 
+					f.add(child);
 			}
 		}
 	   // We should never get here.
@@ -114,21 +115,21 @@ public class Astar implements Search
 
    		//Calculate manhattan to home if no dirt left
 		if(s.dirts.size() == 0)
-			return manhattan(s.location, env.home) /*+ turning_cost*/;
-		
-/*        int turning_cost = 0;
-        if(nearestDirt.x() > n.state.location.x() && n.state.direction == 3)
-            turning_cost++;
-        else if(nearestDirt.x() < n.state.location.x() && n.state.direction == 1)
-            turning_cost++;
-        else if(nearestDirt.y() > n.state.location.y() && n.state.direction == 2)
-            turning_cost++;
-        else if(nearestDirt.y() < n.state.location.y() && n.state.direction == 0)
-            turning_cost++;
-*/
+			return manhattan_total /*+ turning_cost*/;
 
-    //Calculate manhattan to dirt from position of n
-		return manhattan_total + n.state.dirts.size() /*+ turning_cost*/;
+			/*        int turning_cost = 0;
+			        if(nearestDirt.x() > n.state.location.x() && n.state.direction == 3)
+			            turning_cost++;
+			        else if(nearestDirt.x() < n.state.location.x() && n.state.direction == 1)
+			            turning_cost++;
+			        else if(nearestDirt.y() > n.state.location.y() && n.state.direction == 2)
+			            turning_cost++;
+			        else if(nearestDirt.y() < n.state.location.y() && n.state.direction == 0)
+			            turning_cost++;
+			*/
+
+			    //Calculate manhattan to dirt from position of n
+					return manhattan_total + n.state.dirts.size() /*+ turning_cost*/;
 	}
 
 	private int manhattan(Point2D p1, Point2D p2)
@@ -148,15 +149,19 @@ public class Astar implements Search
 		List<Point2D> obstaclelist = new ArrayList<Point2D>();
 
 
-		obstaclelist.add(new Point2D(1, 3));
+		obstaclelist.add(new Point2D(1, 0));
 		obstaclelist.add(new Point2D(1, 1));
-		dirtlist.add(new Point2D(3, 3));
-      	//dirtlist.add(new Point2D(3, 3));
+		obstaclelist.add(new Point2D(1, 2));
+		dirtlist.add(new Point2D(2, 2));
+      		dirtlist.add(new Point2D(3, 3));
+      		dirtlist.add(new Point2D(4, 4));
+      		dirtlist.add(new Point2D(5, 5));
+      		dirtlist.add(new Point2D(10, 10));
 
 		State state = new State(false, new Point2D(0, 0), 3, dirtlist);
 
-		env.r = 4;
-		env.c = 4;
+		env.r = 10;
+		env.c = 10;
 		env.home = new Point2D(0, 0);
 		env.obstacles = obstaclelist;
 
