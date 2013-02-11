@@ -115,7 +115,7 @@ public class Astar implements Search
 					nearestDirt = p;
 				else
 				{
-					if(manhattan(p, n.state.location) < manhattan(nearestDirt, n.state.location))
+					if(manhattan(p, current_location) < manhattan(nearestDirt, current_location))
 					{
 						nearestDirt = p;
 					}
