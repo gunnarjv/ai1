@@ -34,7 +34,6 @@ public class Astar implements Search
 				return path(n);
 			}
 			
-
 			for (String m : s.get_legal_moves(env))
 			{
 				i++;
@@ -101,21 +100,46 @@ public class Astar implements Search
 		State s = n.state;
 		int no_dirts = s.dirts.size();
 		EdgeWeightedGraph G = new EdgeWeightedGraph(no_dirts);
+		Point2D current_location = s.location;
 
 		Point2D d[] = new Point2D[1];
 		Point2D dirt_array[] = s.dirts.toArray(d);
 
-		for(int i = 0; i < no_dirts; i++)
-		{
-			for(int j = i+1; j < no_dirts; j++)
+		if(no_dirts > 1)
+		{	
+			for(int i = 0; i < no_dirts; i++)
 			{
-				Edge edge = new Edge(i, j, manhattan(dirt_array[i], dirt_array[j]));
-				G.addEdge(edge);
+				for(int j = i+1; j < no_dirts; j++)
+				{
+					double manhattan = manhattan(dirt_array[i], dirt_array[j]);
+					if(manhattan != 0)
+					{
+						Edge edge = new Edge(i, j, manhattan);
+						G.addEdge(edge);					
+					}
+				}
 			}
 		}
-		
 		PrimMST prim = new PrimMST(G);
-		return (int)prim.weight();
+
+		Point2D nearestDirt = null;
+		for(Point2D p: s.dirts)
+		{
+			if(nearestDirt == null)
+				nearestDirt = p;
+			else
+			{
+				if(manhattan(p, current_location) < manhattan(nearestDirt, current_location))
+				{
+					nearestDirt = p;
+				}
+			}
+		}
+
+		if (nearestDirt != null)
+			return (int)prim.weight() + no_dirts + manhattan(current_location, nearestDirt);
+		else
+			return (int)prim.weight() + no_dirts;
 	}
 
 	private int manhattan(Point2D p1, Point2D p2)
@@ -134,10 +158,10 @@ public class Astar implements Search
 		List<Point2D> dirtlist = new ArrayList<Point2D>();
 		List<Point2D> obstaclelist = new ArrayList<Point2D>();
 
-
 		obstaclelist.add(new Point2D(1, 3));
 		obstaclelist.add(new Point2D(1, 1));
 		dirtlist.add(new Point2D(3, 3));
+ 		dirtlist.add(new Point2D(0, 1));
       	//dirtlist.add(new Point2D(3, 3));
 
 		State state = new State(false, new Point2D(0, 0), 3, dirtlist);
