@@ -14,8 +14,8 @@ public class Uniform implements Search
 	public java.util.Stack<String> search(State state)
 	{
 		PriorityQueue<Node> f = new PriorityQueue<Node>();
-		HashSet<Node> f_hash = new HashSet<Node>();
-		HashSet<Node> explored = new HashSet<Node>();
+		HashSet<State> f_hash = new HashSet<State>();
+		HashSet<State> explored = new HashSet<State>();
 
 
 		Node root = new Node(state, null, null);
@@ -26,31 +26,43 @@ public class Uniform implements Search
 			return new java.util.Stack<String>();
 
 		f.add(root);
-		f_hash.add(root);
+		f_hash.add(root.state);
 		
 		while(f.peek() != null)
 		{
-			
 			Node n = f.poll();
-			f_hash.remove(n);
+			f_hash.remove(n.state);
 				
-			if(!explored.contains(n))
-			{
-				explored.add(n);
+			if(!explored.contains(n.state)) {
+				explored.add(n.state);
 				State s = n.state;
 
 				if(is_goal(n.state)) return path(n);
-				
 
 				for (String m : s.get_legal_moves(env))
 				{
 					Node child = new Node(s.next_state(m), n, m);
 					evalCost(child, n.cost);
-
-					if(!f_hash.contains(child) && !explored.contains(child)) 
+					/*
+					if(f_hash.contains(child.state))
+					{
+						System.out.println("hello");
+						for(Node old : f)
+						{
+							if(old.state.equals(child.state))
+							{
+								if(child.cost < old.cost)
+								{
+									System.out.println("" + f.remove(old));
+									System.out.println("" + f.add(child));
+								}
+							}
+						}
+					} */
+					if(!f_hash.contains(child.state) && !explored.contains(child.state)) 
                     {
                         f.add(child);
-                        f_hash.add(child);
+                        f_hash.add(child.state);
                     }
 				}
             }
@@ -127,8 +139,8 @@ public class Uniform implements Search
         dirtlist.add(new Point2D(4, 1));
         dirtlist.add(new Point2D(3, 2));
         dirtlist.add(new Point2D(5, 5));
-        dirtlist.add(new Point2D(20, 20));
-        dirtlist.add(new Point2D(20, 19));
+        dirtlist.add(new Point2D(19, 3));
+        dirtlist.add(new Point2D(19, 19));
 
         State state = new State(false, new Point2D(1, 1), 0, dirtlist);
 
