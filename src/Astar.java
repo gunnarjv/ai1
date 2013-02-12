@@ -54,7 +54,6 @@ public class Astar implements Search
 					if(!f_hash.contains(child) && !explored.contains(child)) {
 						f.add(child);
 						f_hash.add(child);
-						System.out.println("Hash:" + child.hashCode());
 					}
 				}
 			}
@@ -111,8 +110,6 @@ public class Astar implements Search
 	private int heuristicEstimate(Node n)
 	{
 
-		return 1;
-		/*
 		State s = n.state;
 		int no_dirts = s.dirts.size();
 		EdgeWeightedGraph G = new EdgeWeightedGraph(no_dirts);
@@ -171,11 +168,11 @@ public class Astar implements Search
 			System.out.println("no_dirts: " + no_dirts);
 			System.out.println("manhattan(current, nearestDirt" + manhattan(current_location, nearestDirt));
 			System.out.println("manhattan(current, nearestDirt" + manhattan(current_location, env.home));				
-			
+			/**/
 			return (int)prim.weight() + no_dirts + manhattan(current_location, nearestDirt) + manhattan(current_location, env.home) + turning_cost;
 		}
-		*/
-		/*
+		/**/
+		
 		else
 		{
 			int turning_cost = 0;
@@ -191,7 +188,7 @@ public class Astar implements Search
 			//System.out.println("The total cost is then " + manhattan(current_location, env.home));
 			return manhattan(current_location, env.home) + turning_cost;
 		}
-		*/
+		/**/
 
 	}
 	
