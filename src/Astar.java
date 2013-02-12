@@ -195,7 +195,7 @@ public class Astar implements Search
 		if (nearestDirt != null)
 			return (int)prim.weight() + no_dirts + manhattan(current_location, nearestDirt);
 		else
-			return (int)prim.weight();
+			return manhattan(current_location, env.home);
 	}
 	private int manhattan(Point2D p1, Point2D p2)
 	{
