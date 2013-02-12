@@ -38,6 +38,17 @@ public class Node implements Comparable<Node>
 
 	}
 
+	@Override
+	public int hashCode() {
+		int hash = fCost;
+		hash += state.location.x() + state.location.y();// + parent.state.location.x() + parent.state.location.y() * 4;
+
+		for(Point2D p : state.dirts) hash += p.x() + p.y();					
+		hash += state.direction;
+
+		return hash;
+	}
+
 	public static final Comparator<Node> HeuristicCompare = new HeuristicCompare();
     public State state;
     public Node parent;
