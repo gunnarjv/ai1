@@ -27,11 +27,11 @@ public class BFS implements Search
 
 		while(!f.isEmpty())
 		{
-
 			Node n = f.dequeue();
 			f_hash.remove(n);
 
-			if(!explored.contains(n)) {
+			if(!explored.contains(n)) 
+			{
 
 				explored.add(n);
 				State s = n.state;
@@ -43,12 +43,11 @@ public class BFS implements Search
 					if(is_goal(child.state)) {
 						return path(child);
 					}
-					else
-						if(!f_hash.contains(child) && !explored.contains(child)) {
-							f.enqueue(child);
-							f_hash.add(child);
-							System.out.println("Hash foo:" + child.hashCode());
-						}
+					else if(!f_hash.contains(child) && !explored.contains(child)) 
+					{
+						f.enqueue(child);
+						f_hash.add(child);
+					}
 				}
 			}
 		}
