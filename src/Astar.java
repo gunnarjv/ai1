@@ -43,8 +43,22 @@ public class Astar implements Search
 				Node child = new Node(s.next_state(m), n, m);
 				evalCost(child, n.cost);
 				child.fCost = child.cost + heuristicEstimate(child);
-
-				if(!f_hash.contains(child.state)) {
+				if(f_hash.contains(child.state))
+				{
+					for(Node old : f)
+					{
+						if(old.state.equals(child.state))
+						{
+							if(child.cost < old.cost)
+							{
+								f.remove(old);
+								f.add(child);
+								break;
+							}
+						}
+					}/**/
+				}
+				else if(!f_hash.contains(child.state)) {
 					f.add(child);
 					f_hash.add(child.state);
 				}
@@ -196,43 +210,42 @@ public class Astar implements Search
 	}
 
 	public static void main(String args[]) {
+        Environment env = new Environment();
+        List<Point2D> dirtlist = new ArrayList<Point2D>();
+        List<Point2D> obstaclelist = new ArrayList<Point2D>();
 
-		Environment env = new Environment();
-		List<Point2D> dirtlist = new ArrayList<Point2D>();
-		List<Point2D> obstaclelist = new ArrayList<Point2D>();
 
+        obstaclelist.add(new Point2D(1, 2));
+        obstaclelist.add(new Point2D(3, 3));
+        obstaclelist.add(new Point2D(3, 4));
+        obstaclelist.add(new Point2D(3, 5));
+        obstaclelist.add(new Point2D(5, 3));
 
-		obstaclelist.add(new Point2D(1, 2));
-		obstaclelist.add(new Point2D(3, 3));
-		obstaclelist.add(new Point2D(3, 4));
-		obstaclelist.add(new Point2D(3, 5));
-		obstaclelist.add(new Point2D(5, 3));
+        dirtlist.add(new Point2D(1, 3));
+        dirtlist.add(new Point2D(2, 4));
+        dirtlist.add(new Point2D(4, 1));
+        dirtlist.add(new Point2D(3, 2));
+        dirtlist.add(new Point2D(5, 5));
+        dirtlist.add(new Point2D(19, 3));
+        dirtlist.add(new Point2D(19, 19));
 
-		dirtlist.add(new Point2D(1, 3));
-		dirtlist.add(new Point2D(2, 4));
-		dirtlist.add(new Point2D(4, 1));
-		dirtlist.add(new Point2D(3, 2));
-		dirtlist.add(new Point2D(5, 5));
-		dirtlist.add(new Point2D(19, 3));
-		dirtlist.add(new Point2D(19, 19));
+        State state = new State(false, new Point2D(1, 1), 0, dirtlist);
 
-		State state = new State(false, new Point2D(1, 1), 0, dirtlist);
+        env.r = 20;
+        env.c = 20;
+        env.home = new Point2D(1, 1);
+        env.obstacles = obstaclelist;
 
-		env.r = 20;
-		env.c = 20;
-		env.home = new Point2D(1, 1);
-		env.obstacles = obstaclelist;
+        Stopwatch watch = new Stopwatch();
+        Search searcher = new Uniform(env); 
 
-		Stopwatch watch = new Stopwatch();
-		Search searcher = new Astar(env);	
+        java.util.Stack<String> moves = searcher.search(state);
+        System.out.println(watch.elapsedTime());
 
-		java.util.Stack<String> moves = searcher.search(state);
-		System.out.println(watch.elapsedTime());
-
-		while(!moves.isEmpty()) {
-			String s = moves.pop();
-			System.out.println(s);
-		}
-	}
+        while(!moves.isEmpty()) {
+            String s = moves.pop();
+            System.out.println(s);
+        }
+    }
 
 }
