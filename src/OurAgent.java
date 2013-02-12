@@ -9,8 +9,6 @@ public class OurAgent implements Agent
     private Environment env = new Environment();
     private State state = new State();
     private java.util.Stack<String> route = new java.util.Stack<String>();
-    //private Search search = new BFS(env);
-
 
     public void init(Collection<String> percepts) {
 		/*
@@ -117,40 +115,13 @@ public class OurAgent implements Agent
 	Search searcher = new Astar(env);
 	
 	int selector = 0;
-/*
-	do{
-		System.out.println("Select Agent type:\n1. DFS\n2. BFS\n3. UCS\n4. Astar\n:");
-		selector = StdIn.readInt();
-		switch(selector) {
-			case 1:
-				searcher = new DFS(env);
-				break;
-			case 2:
-				searcher = new BFS(env);
-				break;
-			case 3:
-				searcher = new Uniform(env);
-				break;
-			case 4:
-				searcher = new Astar(env);
-				break;
-			default:
-				StdOut.println("Invalid selection");
-				selector = 0;
-			}
-	}while(selector == 0);
-
-*/
-
-
 
 	route = searcher.search(state);
 	return;
     }
 
     public String nextAction(Collection<String> percepts) {
-		
-        if(route.empty()) return null;
+       if(route.empty()) return null;
 	   return route.pop();
 	}
 }
