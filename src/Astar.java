@@ -43,7 +43,6 @@ public class Astar implements Search
 			
 				for (String m : s.get_legal_moves(env))
 				{
-					System.out.println(i++);
 					//if(i % 100 == 0) System.out.println(f.size());
 					Node child = new Node(s.next_state(m), n, m);
 					evalCost(child, n.cost);
@@ -164,7 +163,9 @@ public class Astar implements Search
 			{
 				for(int j = i+1; j < no_dirts; j++)
 				{
+					//System.out.println("iteration:" + i + " and j is " + j);
 					double manhattan = manhattan(dirt_array[i], dirt_array[j]);
+					//System.out.println(manhattan);
 					if(manhattan != 0)
 					{
 						Edge edge = new Edge(i, j, manhattan);
@@ -189,10 +190,12 @@ public class Astar implements Search
 			}
 		}
 
+		//System.out.println("There were " + no_dirts + " dirts. ");
+		//System.out.println("The weight is then" + prim.weight());
 		if (nearestDirt != null)
 			return (int)prim.weight() + no_dirts + manhattan(current_location, nearestDirt);
 		else
-			return (int)prim.weight() + no_dirts;
+			return (int)prim.weight();
 	}
 	private int manhattan(Point2D p1, Point2D p2)
 	{
