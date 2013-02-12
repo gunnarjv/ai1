@@ -158,16 +158,13 @@ public class Astar implements Search
 		List<Point2D> dirtlist = new ArrayList<Point2D>();
 		List<Point2D> obstaclelist = new ArrayList<Point2D>();
 
-		obstaclelist.add(new Point2D(1, 3));
-		obstaclelist.add(new Point2D(1, 1));
-		dirtlist.add(new Point2D(3, 3));
  		dirtlist.add(new Point2D(0, 1));
       	//dirtlist.add(new Point2D(3, 3));
 
 		State state = new State(false, new Point2D(0, 0), 3, dirtlist);
 
-		env.r = 4;
-		env.c = 4;
+		env.r = 3;
+		env.c = 3;
 		env.home = new Point2D(0, 0);
 		env.obstacles = obstaclelist;
 
