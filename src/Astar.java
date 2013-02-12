@@ -12,8 +12,13 @@ public class Astar implements Search
 		this.env = lu_env;
 	}
 
+	public int stateExpansions = 0, fSizeMax = 0, cost = 0, time = 0;
+
 	public java.util.Stack<String> search(State state) {
 		
+		//Start the timing
+		Stopwatch watch = new Stopwatch();
+
 		PriorityQueue<Node> f = new PriorityQueue<Node>(20, Node.HeuristicCompare);
 		HashSet<State> explored = new HashSet<State>();
 		HashSet<State> f_hash = new HashSet<State>();
@@ -37,7 +42,9 @@ public class Astar implements Search
 				State s = n.state;
 
 				if(is_goal(s)){
-					System.out.println("Queue size: " + f.size());
+					System.out.println("Time " + watch.elapsedTime());
+					System.out.println("State Expansions were: " + stateExpansions);
+					System.out.println("Frontier size: " + fSizeMax);
 					return path(n);
 				}	
 			
@@ -49,7 +56,11 @@ public class Astar implements Search
 					if(!f_hash.contains(child.state) && !explored.contains(child.state)) {
 						f.add(child);
 						f_hash.add(child.state);
-					}					
+					}	
+					//Get maximum size of frontier
+					if(fSizeMax < f.size()) fSizeMax = f.size();
+					//Add 1 to state expansions
+					stateExpansions++;				
 				}
 			}
 		}
@@ -70,6 +81,10 @@ public class Astar implements Search
 
 		private java.util.Stack<String> path(Node goal) {
 			java.util.Stack<String> strat = new java.util.Stack<String>();
+			
+	    	//Get total cost reaching the goal
+	   		System.out.println("COST: " + goal.cost);
+
 			strat.push(goal.move);
 			Node next_node = goal.parent;
 
@@ -208,11 +223,10 @@ public class Astar implements Search
         env.home = new Point2D(1, 1);
         env.obstacles = obstaclelist;
 
-        Stopwatch watch = new Stopwatch();
         Search searcher = new Astar(env); 
 
         java.util.Stack<String> moves = searcher.search(state);
-        System.out.println(watch.elapsedTime());
+      
 
         while(!moves.isEmpty()) {
             String s = moves.pop();
