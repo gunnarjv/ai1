@@ -51,11 +51,13 @@ public class DFS implements Search
 				{
 					Node child = new Node(s.next_state(m), n, m);
 
-					if(is_goal(child.state)) {
-						return path(child);
+					if(is_goal(child.state)) return path(child);
+					else{
+						//if(child.move.equals("TURN_ON") && child.state.ON) continue;
+						//else if(child.move.equals("SUCK") && !child.state.dirts.contains(child.state.location)) continue;
+						//else if(child.move.equals("TURN_OFF") && (!child.state.location.equals(env.home) || child.state.dirts.size() != 0)) continue;
+						if(!f_hash.contains(child) && !explored.contains(child)) f.push(child);
 					}
-					else
-						if(!f.contains(child) && !explored.contains(child)) f.push(child);
 				}
 			}
 		}
@@ -91,39 +93,42 @@ public class DFS implements Search
 
 			public static void main(String args[]) {
 
-				Environment env = new Environment();
-				List<Point2D> dirtlist = new ArrayList<Point2D>();
-				List<Point2D> obstaclelist = new ArrayList<Point2D>();
+	Environment env = new Environment();
+	List<Point2D> dirtlist = new ArrayList<Point2D>();
+	List<Point2D> obstaclelist = new ArrayList<Point2D>();
 
-				//obstaclelist.add(new Point2D(1, 1));
-				obstaclelist.add(new Point2D(20, 19));
-				obstaclelist.add(new Point2D(20, 18));
-				obstaclelist.add(new Point2D(1, 2));
-				dirtlist.add(new Point2D(2, 2));
-				dirtlist.add(new Point2D(3, 3));
-					//dirtlist.add(new Point2D(4, 4));
-					//dirtlist.add(new Point2D(8, 8));
-				dirtlist.add(new Point2D(7, 7));
-				dirtlist.add(new Point2D(20, 20));
 
-				State state = new State(false, new Point2D(1, 1), 3, dirtlist);
+		obstaclelist.add(new Point2D(1, 2));
+		obstaclelist.add(new Point2D(3, 3));
+		obstaclelist.add(new Point2D(3, 4));
+		obstaclelist.add(new Point2D(3, 5));
+		obstaclelist.add(new Point2D(5, 3));
 
-				env.r = 20;
-				env.c = 20;
-				env.home = new Point2D(1, 1);
-				env.obstacles = obstaclelist;
+		dirtlist.add(new Point2D(1, 3));
+		dirtlist.add(new Point2D(2, 4));
+		dirtlist.add(new Point2D(4, 1));
+		dirtlist.add(new Point2D(3, 2));
+		dirtlist.add(new Point2D(5, 5));
+		dirtlist.add(new Point2D(19, 3));
+		dirtlist.add(new Point2D(19, 19));
 
-				Search searcher = new DFS(env);
+		State state = new State(false, new Point2D(1, 1), 0, dirtlist);
 
-				Stopwatch watch = new Stopwatch();
-				java.util.Stack<String> moves = searcher.search(state);
+		env.r = 20;
+		env.c = 20;
+		env.home = new Point2D(1, 1);
+		env.obstacles = obstaclelist;
 
-				System.out.println(watch.elapsedTime());
+		Stopwatch watch = new Stopwatch();
+		Search searcher = new DFS(env);	
 
-				while(!moves.isEmpty()) {
-					String s = moves.pop();
-					//System.out.println(s);
-				}
+		java.util.Stack<String> moves = searcher.search(state);
+		System.out.println(watch.elapsedTime());
+
+		while(!moves.isEmpty()) {
+			String s = moves.pop();
+			System.out.println(s);
+		}
 
 
 			}

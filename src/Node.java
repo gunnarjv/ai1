@@ -34,18 +34,19 @@ public class Node implements Comparable<Node>
 		if(other.getClass() != this.getClass()) return false;
 		Node that = (Node) other;
 		if(!this.state.equals(that.state)) return false;
-		return this.fCost == that.fCost;
+		return this.cost == that.cost;
 
 	}
 
 	@Override
 	public int hashCode() {
-		int hash = fCost;
+		
+		int hash = 0;//fCost;
 		hash += state.location.x() + state.location.y();// + parent.state.location.x() + parent.state.location.y() * 4;
 
 		for(Point2D p : state.dirts) hash += p.x() + p.y();					
 		hash += state.direction;
-
+		hash += this.state.ON ? 1 : 0;
 		return hash;
 	}
 

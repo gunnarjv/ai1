@@ -13,6 +13,7 @@ public class Astar implements Search
 	}
 
 	public java.util.Stack<String> search(State state) {
+		
 		PriorityQueue<Node> f = new PriorityQueue<Node>(20, Node.HeuristicCompare);
 		//List<Node> explored = new ArrayList<Node>();
 		HashSet<Node> f_hash = new HashSet<Node>();
@@ -29,22 +30,22 @@ public class Astar implements Search
 		
 		while(f.peek() != null)
 		{
-
+		//	System.out.println("bjarni");
 			Node n = f.poll();
 			f_hash.remove(n);
 
 			if(!explored.contains(n)) {
 
 				explored.add(n);
-
 				State s = n.state;
-				if(is_goal(n.state)){
-					System.out.println("Queue size: " + f.size() + "\nExplored size: " + explored.size());
-					return path(n);
-				}
-			
+
 				for (String m : s.get_legal_moves(env))
 				{
+
+					if(is_goal(n.state)){
+						System.out.println("Queue size: " + f.size() + "\nExplored size: " + explored.size());
+						return path(n);
+					}	
 
 					Node child = new Node(s.next_state(m), n, m);
 					evalCost(child, n.cost);
@@ -53,6 +54,7 @@ public class Astar implements Search
 					if(!f_hash.contains(child) && !explored.contains(child)) {
 						f.add(child);
 						f_hash.add(child);
+						System.out.println("Hash:" + child.hashCode());
 					}
 				}
 			}
@@ -108,28 +110,28 @@ public class Astar implements Search
 
 	private int heuristicEstimate(Node n)
 	{
+
+		return 1;
+		/*
 		State s = n.state;
 		int no_dirts = s.dirts.size();
 		EdgeWeightedGraph G = new EdgeWeightedGraph(no_dirts);
 		Point2D current_location = s.location;
 
-		Point2D d[] = new Point2D[1];
-		Point2D dirt_array[] = s.dirts.toArray(d);
+		Point2D dirt_array[] = s.dirts.toArray(new Point2D[1]);
 
 		if(no_dirts > 1)
 		{	
 			for(int i = 0; i < no_dirts; i++)
 			{
+				Point2D dirt_array_i = dirt_array[i];
 				for(int j = i+1; j < no_dirts; j++)
 				{
 					//System.out.println("iteration:" + i + " and j is " + j);
-					double manhattan = manhattan(dirt_array[i], dirt_array[j]);
+					double manhattan = manhattan(dirt_array_i, dirt_array[j]);
 					//System.out.println(manhattan);
-					if(manhattan != 0)
-					{
-						Edge edge = new Edge(i, j, manhattan);
-						G.addEdge(edge);					
-					}
+					Edge edge = new Edge(i, j, manhattan);
+					G.addEdge(edge);					
 				}
 			}
 		}
@@ -150,15 +152,49 @@ public class Astar implements Search
 		}
 
 		//System.out.println("There were " + no_dirts + " dirts. ");
-		//System.out.println("The weight is then" + prim.weight());
+		//System.out.println("The weight is then" + (int)prim.weight());
 		if (nearestDirt != null)
 		{
-			//System.out.println("The manhattan to dirt is then " + manhattan(current_location, nearestDirt));
-			return (int)prim.weight() + no_dirts + manhattan(current_location, nearestDirt) + manhattan(current_location, env.home);
+
+			int turning_cost = 0;
+			if(nearestDirt.x() > n.state.location.x() && n.state.direction == 3)
+			turning_cost++;
+			else if(nearestDirt.x() < n.state.location.x() && n.state.direction == 1)
+			turning_cost++;
+			else if(nearestDirt.y() > n.state.location.y() && n.state.direction == 2)
+			turning_cost++;
+			else if(nearestDirt.y() < n.state.location.y() && n.state.direction == 0)
+			turning_cost++;
+
+			/*System.out.println("The manhattan to dirt is then " + manhattan(current_location, nearestDirt));
+			System.out.println("The total cost is then" + (((int)prim.weight()) + no_dirts + manhattan(current_location, nearestDirt) + manhattan(current_location, env.home)));
+			System.out.println("no_dirts: " + no_dirts);
+			System.out.println("manhattan(current, nearestDirt" + manhattan(current_location, nearestDirt));
+			System.out.println("manhattan(current, nearestDirt" + manhattan(current_location, env.home));				
+			
+			return (int)prim.weight() + no_dirts + manhattan(current_location, nearestDirt) + manhattan(current_location, env.home) + turning_cost;
 		}
+		*/
+		/*
 		else
-			return manhattan(current_location, env.home);
+		{
+			int turning_cost = 0;
+			if(env.home.x() > n.state.location.x() && n.state.direction == 3)
+			turning_cost++;
+			else if(env.home.x() < n.state.location.x() && n.state.direction == 1)
+			turning_cost++;
+			else if(env.home.y() > n.state.location.y() && n.state.direction == 2)
+			turning_cost++;
+			else if(env.home.y() < n.state.location.y() && n.state.direction == 0)
+			turning_cost++;
+
+			//System.out.println("The total cost is then " + manhattan(current_location, env.home));
+			return manhattan(current_location, env.home) + turning_cost;
+		}
+		*/
+
 	}
+	
 
 	private int manhattan(Point2D p1, Point2D p2)
 	{
@@ -178,24 +214,32 @@ public class Astar implements Search
 
 
 		obstaclelist.add(new Point2D(1, 2));
-		dirtlist.add(new Point2D(2, 2));
-      		dirtlist.add(new Point2D(3, 3));
-      		dirtlist.add(new Point2D(4, 4));
-      		dirtlist.add(new Point2D(10, 10));
-      		dirtlist.add(new Point2D(15, 15));
-      		dirtlist.add(new Point2D(7, 7));
+		obstaclelist.add(new Point2D(3, 3));
+		obstaclelist.add(new Point2D(3, 4));
+		obstaclelist.add(new Point2D(3, 5));
+		obstaclelist.add(new Point2D(5, 3));
 
-		State state = new State(false, new Point2D(1, 1), 3, dirtlist);
+		dirtlist.add(new Point2D(1, 3));
+		dirtlist.add(new Point2D(2, 4));
+		dirtlist.add(new Point2D(4, 1));
+		dirtlist.add(new Point2D(3, 2));
+		dirtlist.add(new Point2D(5, 5));
+		dirtlist.add(new Point2D(20, 20));
+		dirtlist.add(new Point2D(20, 19));
 
-		env.r = 15;
-		env.c = 15;
+		State state = new State(false, new Point2D(1, 1), 0, dirtlist);
+
+		env.r = 20;
+		env.c = 20;
 		env.home = new Point2D(1, 1);
 		env.obstacles = obstaclelist;
 
-		Search searcher = new Astar(env);
-		Stopwatch watch  = new Stopwatch();
+		Stopwatch watch = new Stopwatch();
+		Search searcher = new Astar(env);	
+
 		java.util.Stack<String> moves = searcher.search(state);
-		System.out.println("Elapsed time: " + watch.elapsedTime());
+		System.out.println(watch.elapsedTime());
+
 		while(!moves.isEmpty()) {
 			String s = moves.pop();
 			System.out.println(s);

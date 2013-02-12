@@ -141,20 +141,7 @@ public class State
 		if(other == null) return false;
 		if(other.getClass() != this.getClass()) return false;
 		State that  = (State) other;
-		if(this.ON == that.ON && this.location.equals(that.location) && this.direction == that.direction && this.dirts.equals(that.dirts))
-		{/*
-			System.out.println("This on " + this.ON + " That on " + that.ON + " This dir " + this.direction + " that dir " + that.direction);
-			System.out.println("This loc " + this.location.x() + " - " + this.location.y());
-			System.out.println("That loc " + that.location.x() + " - " + that.location.y());
-			System.out.print("This dirts: ");
-			for(Point2D p : this.dirts)
-				System.out.println(p.x() + " - " + p.y());
-			System.out.print("That dirts: ");
-			for(Point2D p : that.dirts)
-				System.out.println(p.x() + " - " + p.y());
-		*/
-			return true;
-		}
+		if(this.ON == that.ON && this.location.equals(that.location) && this.direction == that.direction && this.dirts.equals(that.dirts)) return true;
 		return false;
 	}
 

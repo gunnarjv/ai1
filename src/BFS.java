@@ -19,9 +19,8 @@ public class BFS implements Search
 
 		Node root = new Node(state, null, null);
 
-       // If the initial state is goal we are done.
-		if(is_goal(root.state))
-			return new java.util.Stack<String>();
+	       // If the initial state is goal we are done.
+		if(is_goal(root.state)) return new java.util.Stack<String>();
 
 		f.enqueue(root);
 		f_hash.add(root);
@@ -45,7 +44,11 @@ public class BFS implements Search
 						return path(child);
 					}
 					else
-						if(!f_hash.contains(child) && !explored.contains(child)) f.enqueue(child);
+						if(!f_hash.contains(child) && !explored.contains(child)) {
+							f.enqueue(child);
+							f_hash.add(child);
+							System.out.println("Hash foo:" + child.hashCode());
+						}
 				}
 			}
 		}
