@@ -83,7 +83,6 @@ public class Astar implements Search
 	}
 
 	private void evalCost(Node m, int parentCost) {
-
 		switch(m.move) {
 
 			case "TURN_OFF":
@@ -104,7 +103,6 @@ public class Astar implements Search
 
 	private int heuristicEstimate(Node n)
 	{
-
 		State s = n.state;
 		int no_dirts = s.dirts.size();
 		EdgeWeightedGraph G = new EdgeWeightedGraph(no_dirts);
@@ -143,8 +141,6 @@ public class Astar implements Search
 			}
 		}
 
-		//System.out.println("There were " + no_dirts + " dirts. ");
-		//System.out.println("The weight is then" + (int)prim.weight());
 		if (nearestDirt != null)
 		{
 
@@ -158,15 +154,8 @@ public class Astar implements Search
 			else if(nearestDirt.y() < n.state.location.y() && n.state.direction == 0)
 			turning_cost++;
 
-			/*System.out.println("The manhattan to dirt is then " + manhattan(current_location, nearestDirt));
-			System.out.println("The total cost is then" + (((int)prim.weight()) + no_dirts + manhattan(current_location, nearestDirt) + manhattan(current_location, env.home)));
-			System.out.println("no_dirts: " + no_dirts);
-			System.out.println("manhattan(current, nearestDirt" + manhattan(current_location, nearestDirt));
-			System.out.println("manhattan(current, nearestDirt" + manhattan(current_location, env.home));				
-			/**/
 			return (int)prim.weight() + no_dirts + manhattan(current_location, nearestDirt) + manhattan(current_location, env.home) + turning_cost;
 		}
-		/**/
 		
 		else
 		{
@@ -180,13 +169,10 @@ public class Astar implements Search
 			else if(env.home.y() < n.state.location.y() && n.state.direction == 0)
 			turning_cost++;
 
-			//System.out.println("The total cost is then " + manhattan(current_location, env.home));
 			return manhattan(current_location, env.home) + turning_cost;
 		}
-		/**/
 
 	}
-	
 
 	private int manhattan(Point2D p1, Point2D p2)
 	{
@@ -194,15 +180,12 @@ public class Astar implements Search
 		int yDist = Math.abs(p1.y() - p2.y());
 
 		return xDist + yDist;
-
-
 	}
 
 	public static void main(String args[]) {
         Environment env = new Environment();
         List<Point2D> dirtlist = new ArrayList<Point2D>();
         List<Point2D> obstaclelist = new ArrayList<Point2D>();
-
 
         obstaclelist.add(new Point2D(1, 2));
         obstaclelist.add(new Point2D(3, 3));
@@ -226,7 +209,7 @@ public class Astar implements Search
         env.obstacles = obstaclelist;
 
         Stopwatch watch = new Stopwatch();
-        Search searcher = new Uniform(env); 
+        Search searcher = new Astar(env); 
 
         java.util.Stack<String> moves = searcher.search(state);
         System.out.println(watch.elapsedTime());
