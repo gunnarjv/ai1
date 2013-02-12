@@ -8,7 +8,7 @@ public class OurAgent implements Agent
 {
     private Environment env = new Environment();
     private State state = new State();
-    private Stack<String> route = new Stack<String>();
+    private java.util.Stack<String> route = new java.util.Stack<String>();
     //private Search search = new BFS(env);
 
 
@@ -108,11 +108,11 @@ public class OurAgent implements Agent
 	for(Point2D p : state.dirts) {
 	    System.out.println("x: " + p.x() + " - y: " + p.y() );
 	}
-	System.out.println("\n");
+	System.out.println("\nHome located at: " + env.home.x() + " - " + env.home.y() + "\n");
 
 	//Initialize the searching algorithm and find optimal path.
 	state.location = new Point2D(env.home.x(), env.home.y());
-	Search searcher = new Astar(env);
+	Search searcher = new BFS(env);
 	route = searcher.search(state);
 	return;
     }

@@ -33,14 +33,14 @@ public class Node implements Comparable<Node>
 		if(other == null) return false;
 		if(other.getClass() != this.getClass()) return false;
 		Node that = (Node) other;
-		if(!this.state.equals(that.state) || !this.move.equals(that.move)) return false;
-		return this.fCost < that.fCost;
+		if(!this.state.equals(that.state)) return false;
+		return this.fCost == that.fCost;
 
 	}
 
 	public static final Comparator<Node> HeuristicCompare = new HeuristicCompare();
     public State state;
     public Node parent;
-    public int cost, fCost;
+    public int cost, fCost, id;
     public String move;
 }

@@ -100,8 +100,7 @@ public class Uniform implements Search
 
 
      obstaclelist.add(new Point2D(1, 1));
-     obstaclelist.add(new Point2D(0, 1))
-     obstaclelist.add(new Point2D(2, 1))
+     
      // obstaclelist.add(new Point2D(1, 1));
       dirtlist.add(new Point2D(1, 2));
       dirtlist.add(new Point2D(3, 3));

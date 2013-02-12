@@ -23,6 +23,7 @@ public Environment env;
     public Stack<String> search(State state)
     {
 	     Stack<Node> f = new Stack<Node>();
+	     List<Node> explored = new ArrayList<Node>();
        Node root = new Node(state, null, null);
 
        // If the initial state is goal we are done.
@@ -36,6 +37,7 @@ public Environment env;
        while(!f.empty())
        {
 		Node n = f.pop();
+		explored.add(n);
 		State s = n.state;
 
 		for (String m : s.get_legal_moves(env))
@@ -46,7 +48,7 @@ public Environment env;
 				return path(child);
 	    }
 			else
-				f.push(child);
+				if(!f.contains(child) && !explored.contains(child)) f.push(child);
 		}
        }
        // We should never get here.
@@ -85,12 +87,19 @@ public Environment env;
       List<Point2D> dirtlist = new ArrayList<Point2D>();
       List<Point2D> obstaclelist = new ArrayList<Point2D>();
 
-      dirtlist.add(new Point2D(0, 0));
+    obstaclelist.add(new Point2D(1, 0));
+    obstaclelist.add(new Point2D(1, 1));
+    obstaclelist.add(new Point2D(1, 2));
+      dirtlist.add(new Point2D(2, 2));
+          dirtlist.add(new Point2D(3, 3));
+          //dirtlist.add(new Point2D(4, 4));
+          //dirtlist.add(new Point2D(8, 8));
+          dirtlist.add(new Point2D(7, 7));
+
       State state = new State(false, new Point2D(0, 0), 3, dirtlist);
 
-      env.r = 1;
-      env.c = 1;
-
+      env.r = 10;
+      env.c = 10;
       env.home = new Point2D(0, 0);
       env.obstacles = obstaclelist;
 
