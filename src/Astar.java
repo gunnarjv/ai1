@@ -226,7 +226,7 @@ public class Astar implements Search
         env.obstacles = obstaclelist;
 
         Stopwatch watch = new Stopwatch();
-        Search searcher = new Uniform(env); 
+        Search searcher = new Astar(env); 
 
         java.util.Stack<String> moves = searcher.search(state);
         System.out.println(watch.elapsedTime());
