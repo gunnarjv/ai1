@@ -30,8 +30,7 @@ public class DFS implements Search
 		Node root = new Node(state, null, null);
 
 			 // If the initial state is goal we are done.
-		if(is_goal(root.state))
-			return new java.util.Stack<String>();
+		if(is_goal(root.state)) return new java.util.Stack<String>();
 
 
 		f.push(root);
@@ -52,12 +51,12 @@ public class DFS implements Search
 					Node child = new Node(s.next_state(m), n, m);
 
 					if(is_goal(child.state)) return path(child);
-					else{
+					else if (!f_hash.contains(child) && !explored.contains(child))
+						f.push(child);
 						//if(child.move.equals("TURN_ON") && child.state.ON) continue;
 						//else if(child.move.equals("SUCK") && !child.state.dirts.contains(child.state.location)) continue;
 						//else if(child.move.equals("TURN_OFF") && (!child.state.location.equals(env.home) || child.state.dirts.size() != 0)) continue;
-						if(!f_hash.contains(child) && !explored.contains(child)) f.push(child);
-					}
+					
 				}
 			}
 		}
@@ -123,14 +122,13 @@ public class DFS implements Search
 		Search searcher = new DFS(env);	
 
 		java.util.Stack<String> moves = searcher.search(state);
-		System.out.println(watch.elapsedTime());
 
 		while(!moves.isEmpty()) {
 			String s = moves.pop();
 			System.out.println(s);
 		}
 
-
+		System.out.println("time was " +watch.elapsedTime());
 			}
 
 		}

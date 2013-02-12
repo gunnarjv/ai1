@@ -42,11 +42,11 @@ public class Node implements Comparable<Node>
 	public int hashCode() {
 		
 		int hash = 0;//fCost;
-		hash += state.location.x() + state.location.y();// + parent.state.location.x() + parent.state.location.y() * 4;
+		hash += 3*state.location.x() + 7*state.location.y();// + parent.state.location.x() + parent.state.location.y() * 4;
 
-		for(Point2D p : state.dirts) hash += p.x() + p.y();					
-		hash += state.direction;
-		hash += this.state.ON ? 1 : 0;
+		for(Point2D p : state.dirts) hash = hash*17 + p.x() + p.y();					
+		hash = hash*31 + state.direction;
+		hash = hash*13 + (this.state.ON ? 1 : 0);
 		return hash;
 	}
 
