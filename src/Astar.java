@@ -15,8 +15,6 @@ public class Astar implements Search
 	public java.util.Stack<String> search(State state) {
 		
 		PriorityQueue<Node> f = new PriorityQueue<Node>(20, Node.HeuristicCompare);
-		//List<Node> explored = new ArrayList<Node>();
-		HashSet<State> f_hash = new HashSet<State>();
 
 		Node root = new Node(state, null, null);
 		root.cost = 0;
@@ -25,7 +23,6 @@ public class Astar implements Search
 		if(is_goal(root.state)) return new java.util.Stack<String>();
 		
 		f.add(root);
-		f_hash.add(root.state);
 		
 		while(f.peek() != null)
 		{
@@ -33,7 +30,7 @@ public class Astar implements Search
 
 			State s = n.state;
 
-			if(is_goal(n.state)){
+			if(is_goal(s)){
 				System.out.println("Queue size: " + f.size());
 				return path(n);
 			}	
@@ -43,25 +40,7 @@ public class Astar implements Search
 				Node child = new Node(s.next_state(m), n, m);
 				evalCost(child, n.cost);
 				child.fCost = child.cost + heuristicEstimate(child);
-				if(f_hash.contains(child.state))
-				{
-					for(Node old : f)
-					{
-						if(old.state.equals(child.state))
-						{
-							if(child.cost < old.cost)
-							{
-								f.remove(old);
-								f.add(child);
-								break;
-							}
-						}
-					}/**/
-				}
-				else if(!f_hash.contains(child.state)) {
-					f.add(child);
-					f_hash.add(child.state);
-				}
+				f.add(child);
 			}
 		}
 	   	// We should never get here.
