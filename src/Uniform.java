@@ -43,22 +43,7 @@ public class Uniform implements Search
 				{
 					Node child = new Node(s.next_state(m), n, m);
 					evalCost(child, n.cost);
-					/*
-					if(f_hash.contains(child.state))
-					{
-						System.out.println("hello");
-						for(Node old : f)
-						{
-							if(old.state.equals(child.state))
-							{
-								if(child.cost < old.cost)
-								{
-									System.out.println("" + f.remove(old));
-									System.out.println("" + f.add(child));
-								}
-							}
-						}
-					} */
+
 					if(!f_hash.contains(child.state) && !explored.contains(child.state)) 
                     {
                         f.add(child);
