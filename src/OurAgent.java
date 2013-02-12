@@ -112,7 +112,38 @@ public class OurAgent implements Agent
 
 	//Initialize the searching algorithm and find optimal path.
 	state.location = new Point2D(env.home.x(), env.home.y());
-	Search searcher = new Astar(env);
+	
+
+	Search searcher = new DFS(env);
+	
+	int selector = 0;
+/*
+	do{
+		System.out.println("Select Agent type:\n1. DFS\n2. BFS\n3. UCS\n4. Astar\n:");
+		selector = StdIn.readInt();
+		switch(selector) {
+			case 1:
+				searcher = new DFS(env);
+				break;
+			case 2:
+				searcher = new BFS(env);
+				break;
+			case 3:
+				searcher = new Uniform(env);
+				break;
+			case 4:
+				searcher = new Astar(env);
+				break;
+			default:
+				StdOut.println("Invalid selection");
+				selector = 0;
+			}
+	}while(selector == 0);
+
+*/
+
+
+
 	route = searcher.search(state);
 	return;
     }
