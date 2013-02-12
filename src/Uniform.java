@@ -87,6 +87,10 @@ public class Uniform implements Search
 	{
 		java.util.Stack<String> strat = new java.util.Stack<String>();
 
+
+    	//Get total cost reaching the goal
+   		System.out.println("COST: " + goal.cost);
+
 		strat.push(goal.move);
 		Node next_node = goal.parent;
 
@@ -94,7 +98,6 @@ public class Uniform implements Search
         {
         	strat.push(next_node.move);
         	next_node = next_node.parent;
-
         }
 
         return strat;
@@ -151,11 +154,9 @@ public class Uniform implements Search
         env.home = new Point2D(1, 1);
         env.obstacles = obstaclelist;
 
-        Stopwatch watch = new Stopwatch();
         Search searcher = new Uniform(env); 
 
         java.util.Stack<String> moves = searcher.search(state);
-        System.out.println(watch.elapsedTime());
 
         while(!moves.isEmpty()) {
             String s = moves.pop();

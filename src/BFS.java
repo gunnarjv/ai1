@@ -93,6 +93,8 @@ public class BFS implements Search
        	//Get total cost (1 for every move in BFS)
        	cost ++;
        }
+       	
+       	System.out.println("COST: " + cost);
 
        return strat;
 }
