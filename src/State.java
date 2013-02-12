@@ -134,6 +134,18 @@ public class State
 		}
 	}
 
+	@Override
+	public int hashCode() {
+		
+		int hash = 0;//fCost;
+		hash += 3*location.x() + 7*location.y();// + parent.location.x() + parent.location.y() * 4;
+
+		for(Point2D p : dirts) hash = hash*17 + p.x() + p.y();					
+		hash = hash*31 + direction;
+		hash = hash*13 + (this.ON ? 1 : 0);
+		return hash;
+	}
+
 	public boolean equals(Object other) {
 
 		//System.out.println("Whoop");

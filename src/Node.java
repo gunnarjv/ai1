@@ -34,8 +34,7 @@ public class Node implements Comparable<Node>
 		if(other.getClass() != this.getClass()) return false;
 		Node that = (Node) other;
 		if(!this.state.equals(that.state)) return false;
-		return this.cost == that.cost;
-
+		return true;
 	}
 
 	@Override

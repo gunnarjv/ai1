@@ -19,8 +19,8 @@ public class Uniform implements Search
 		Stopwatch watch = new Stopwatch();
 
 		PriorityQueue<Node> f = new PriorityQueue<Node>();
-		HashSet<Node> f_hash = new HashSet<Node>();
-		HashSet<Node> explored = new HashSet<Node>();
+		HashSet<State> f_hash = new HashSet<State>();
+		HashSet<State> explored = new HashSet<State>();
 
 
 		Node root = new Node(state, null, null);
@@ -31,17 +31,16 @@ public class Uniform implements Search
 			return new java.util.Stack<String>();
 
 		f.add(root);
-		f_hash.add(root);
+		f_hash.add(root.state);
 		
 		while(f.peek() != null)
 		{
-			
 			Node n = f.poll();
-			f_hash.remove(n);
+			f_hash.remove(n.state);
 				
-			if(!explored.contains(n))
+			if(!explored.contains(n.state)) 
 			{
-				explored.add(n);
+				explored.add(n.state);
 				State s = n.state;
 
 				if(is_goal(n.state))
@@ -57,10 +56,10 @@ public class Uniform implements Search
 					Node child = new Node(s.next_state(m), n, m);
 					evalCost(child, n.cost);
 
-					if(!f_hash.contains(child) && !explored.contains(child)) 
+					if(!f_hash.contains(child.state) && !explored.contains(child.state)) 
                     {
                         f.add(child);
-                        f_hash.add(child);
+                        f_hash.add(child.state);
                     }
                     //Get maximum size of frontier
 					if(fSizeMax < f.size()) fSizeMax = f.size();
@@ -95,6 +94,7 @@ public class Uniform implements Search
         {
         	strat.push(next_node.move);
         	next_node = next_node.parent;
+
         }
 
         return strat;
@@ -141,8 +141,8 @@ public class Uniform implements Search
         dirtlist.add(new Point2D(4, 1));
         dirtlist.add(new Point2D(3, 2));
         dirtlist.add(new Point2D(5, 5));
-        dirtlist.add(new Point2D(20, 20));
-        dirtlist.add(new Point2D(20, 19));
+        dirtlist.add(new Point2D(19, 3));
+        dirtlist.add(new Point2D(19, 19));
 
         State state = new State(false, new Point2D(1, 1), 0, dirtlist);
 
