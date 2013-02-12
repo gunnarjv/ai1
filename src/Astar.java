@@ -15,9 +15,6 @@ public class Astar implements Search
 	public java.util.Stack<String> search(State state) {
 		
 		PriorityQueue<Node> f = new PriorityQueue<Node>(20, Node.HeuristicCompare);
-		//List<Node> explored = new ArrayList<Node>();
-		HashSet<Node> f_hash = new HashSet<Node>();
-		HashSet<Node> explored = new HashSet<Node>();
 
 		Node root = new Node(state, null, null);
 		root.cost = 0;
@@ -26,36 +23,24 @@ public class Astar implements Search
 		if(is_goal(root.state)) return new java.util.Stack<String>();
 		
 		f.add(root);
-		f_hash.add(root);
 		
 		while(f.peek() != null)
 		{
-		//	System.out.println("bjarni");
 			Node n = f.poll();
-			f_hash.remove(n);
+			State s = n.state;
 
-			if(!explored.contains(n)) {
+			if(is_goal(s)){
+				System.out.println("Queue size: " + f.size());
+				return path(n);
+			}	
+		
+			for (String m : s.get_legal_moves(env))
+			{
+				Node child = new Node(s.next_state(m), n, m);
+				evalCost(child, n.cost);
+				child.fCost = child.cost + heuristicEstimate(child);
 
-				explored.add(n);
-				State s = n.state;
-
-				for (String m : s.get_legal_moves(env))
-				{
-
-					if(is_goal(n.state)){
-						System.out.println("Queue size: " + f.size() + "\nExplored size: " + explored.size());
-						return path(n);
-					}	
-
-					Node child = new Node(s.next_state(m), n, m);
-					evalCost(child, n.cost);
-					child.fCost = child.cost + heuristicEstimate(child);
-
-					if(!f_hash.contains(child) && !explored.contains(child)) {
-						f.add(child);
-						f_hash.add(child);
-					}
-				}
+				f.add(child);
 			}
 		}
 	   	// We should never get here.
@@ -221,8 +206,8 @@ public class Astar implements Search
 		dirtlist.add(new Point2D(4, 1));
 		dirtlist.add(new Point2D(3, 2));
 		dirtlist.add(new Point2D(5, 5));
-		dirtlist.add(new Point2D(20, 20));
-		dirtlist.add(new Point2D(20, 19));
+		dirtlist.add(new Point2D(19, 3));
+		dirtlist.add(new Point2D(19, 19));
 
 		State state = new State(false, new Point2D(1, 1), 0, dirtlist);
 
