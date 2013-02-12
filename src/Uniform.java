@@ -10,9 +10,14 @@ public class Uniform implements Search
 
 		this.env = lu_env;
 	}
+	
+	public int stateExpansions = 0, fSizeMax = 0, cost = 0, time = 0;
 
 	public java.util.Stack<String> search(State state)
 	{
+		//Start the timing
+		Stopwatch watch = new Stopwatch();
+
 		PriorityQueue<Node> f = new PriorityQueue<Node>();
 		HashSet<Node> f_hash = new HashSet<Node>();
 		HashSet<Node> explored = new HashSet<Node>();
@@ -39,8 +44,13 @@ public class Uniform implements Search
 				explored.add(n);
 				State s = n.state;
 
-				if(is_goal(n.state)) return path(n);
-				
+				if(is_goal(n.state))
+				{
+					System.out.println("Time " + watch.elapsedTime());
+					System.out.println("State Expansions were: " + stateExpansions);
+					System.out.println("Frontier size: " + fSizeMax);
+					return path(n);
+				}
 
 				for (String m : s.get_legal_moves(env))
 				{
@@ -52,6 +62,10 @@ public class Uniform implements Search
                         f.add(child);
                         f_hash.add(child);
                     }
+                    //Get maximum size of frontier
+					if(fSizeMax < f.size()) fSizeMax = f.size();
+					//Add 1 to state expansions
+					stateExpansions++;
 				}
             }
 		}

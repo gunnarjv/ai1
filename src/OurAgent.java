@@ -114,7 +114,7 @@ public class OurAgent implements Agent
 	state.location = new Point2D(env.home.x(), env.home.y());
 	
 
-	Search searcher = new BFS(env);
+	Search searcher = new Uniform(env);
 	
 	int selector = 0;
 /*
