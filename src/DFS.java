@@ -20,8 +20,13 @@ public class DFS implements Search
 
 	}
 
+	public int stateExpansions = 0, fSizeMax = 0, cost = 0, time = 0;
+
 	public java.util.Stack<String> search(State state)
 	{
+		//Start the timing
+		Stopwatch watch = new Stopwatch();
+
 		java.util.Stack<Node> f = new java.util.Stack<Node>();
 		HashSet<Node> f_hash = new HashSet<Node>();
 		HashSet<Node> explored = new HashSet<Node>();
@@ -50,13 +55,25 @@ public class DFS implements Search
 				{
 					Node child = new Node(s.next_state(m), n, m);
 
-					if(is_goal(child.state)) return path(child);
+					if(is_goal(child.state))
+					{
+						System.out.println("Time " + watch.elapsedTime());
+						System.out.println("State Expansions were: " + stateExpansions);
+						System.out.println("Frontier size: " + fSizeMax);
+						return path(child);						
+					} 
 					else if (!f_hash.contains(child) && !explored.contains(child))
+					{
 						f.push(child);
+						f_hash.add(child);
 						//if(child.move.equals("TURN_ON") && child.state.ON) continue;
 						//else if(child.move.equals("SUCK") && !child.state.dirts.contains(child.state.location)) continue;
 						//else if(child.move.equals("TURN_OFF") && (!child.state.location.equals(env.home) || child.state.dirts.size() != 0)) continue;
-					
+					}
+					//Get maximum size of frontier
+					if(fSizeMax < f.size()) fSizeMax = f.size();
+					//Add 1 to state expansions
+					stateExpansions++;
 				}
 			}
 		}
@@ -85,9 +102,14 @@ public class DFS implements Search
 			 {
 			 	strat.push(next_node.move);
 			 	next_node = next_node.parent;
-			 }
 
-			 return strat;
+			 	//Get total cost (1 for every move in BFS)
+       			cost ++;
+			 }
+       			
+       			System.out.println("COST: " + cost);
+
+			 	return strat;
 			}
 
 			public static void main(String args[]) {
@@ -118,7 +140,6 @@ public class DFS implements Search
 		env.home = new Point2D(1, 1);
 		env.obstacles = obstaclelist;
 
-		Stopwatch watch = new Stopwatch();
 		Search searcher = new DFS(env);	
 
 		java.util.Stack<String> moves = searcher.search(state);
@@ -128,7 +149,6 @@ public class DFS implements Search
 			System.out.println(s);
 		}
 
-		System.out.println("time was " +watch.elapsedTime());
-			}
-
 		}
+
+	}
