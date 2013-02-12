@@ -11,6 +11,8 @@ public class BFS implements Search
 
 	}
 
+	public int stateExpansions = 0, fSizeMax = 0, cost = 0;
+
 	public java.util.Stack<String> search(State state)
 	{
 		Queue<Node> f = new Queue<Node>();
@@ -48,6 +50,11 @@ public class BFS implements Search
 						f.enqueue(child);
 						f_hash.add(child);
 					}
+
+					//Get maximum size of frontier
+					if(fSizeMax < f.size()) fSizeMax = f.size();
+					//Add 1 to state expansions
+					stateExpansions++;
 				}
 			}
 		}
@@ -76,7 +83,14 @@ public class BFS implements Search
        {
        	strat.push(next_node.move);
        	next_node = next_node.parent;
+
+       	//Get total cost (1 for every move in BFS)
+       	cost ++;
        }
+
+	System.out.println("State Expansions were: " + stateExpansions);
+	System.out.println("Frontier size: " + fSizeMax);
+	System.out.println("Cost " + cost);
 
        return strat;
 }
@@ -113,7 +127,7 @@ public static void main(String args[]) {
 	Search searcher = new BFS(env);	
 
 	java.util.Stack<String> moves = searcher.search(state);
-	System.out.println(watch.elapsedTime());
+	System.out.println("Time " + watch.elapsedTime());
 
 	while(!moves.isEmpty()) {
 		String s = moves.pop();

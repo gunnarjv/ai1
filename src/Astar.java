@@ -30,7 +30,6 @@ public class Astar implements Search
 		
 		while(f.peek() != null)
 		{
-		//	System.out.println("bjarni");
 			Node n = f.poll();
 			f_hash.remove(n);
 
