@@ -14,8 +14,8 @@ public class Astar implements Search
 
 	public java.util.Stack<String> search(State state) {
 		PriorityQueue<Node> f = new PriorityQueue<Node>(20, Node.HeuristicCompare);
-		List<Node> explored = new ArrayList<Node>();
-		//Map<Integer, Node> explored = new Hashtable<Integer, Node>();
+		//List<Node> explored = new ArrayList<Node>();
+		HashMap<Integer, List<Node>> explored = new HashMap<Integer, List<Node>>();
 
 		Node root = new Node(state, null, null);
 		root.cost = 0;
@@ -26,7 +26,7 @@ public class Astar implements Search
 		int i = 0;
 		while(f.peek() != null)
 		{
-			i++;
+
 			Node n = f.poll();
 		//	if(n.parent != null)
 				//System.out.println("Parent Node: " + n.parent + "\nParent Move: " + n.parent.move + "\nNode: " + n + "\nNode move: " + n.move + "\n\n\n");
@@ -43,7 +43,8 @@ public class Astar implements Search
 			
 				for (String m : s.get_legal_moves(env))
 				{
-					System.out.println(i++);
+					i++;
+					//System.out.println(i++);
 					//if(i % 100 == 0) System.out.println(f.size());
 					Node child = new Node(s.next_state(m), n, m);
 					evalCost(child, n.cost);
@@ -212,18 +213,18 @@ public class Astar implements Search
 
 
 		//obstaclelist.add(new Point2D(1, 1));
-		obstaclelist.add(new Point2D(1, 1));
+		//obstaclelist.add(new Point2D(1, 1));
 		obstaclelist.add(new Point2D(1, 2));
 		dirtlist.add(new Point2D(2, 2));
       		dirtlist.add(new Point2D(3, 3));
       		//dirtlist.add(new Point2D(4, 4));
-      		//dirtlist.add(new Point2D(8, 8));
+      		dirtlist.add(new Point2D(10, 10));
       		dirtlist.add(new Point2D(7, 7));
 
 		State state = new State(false, new Point2D(1, 1), 3, dirtlist);
 
-		env.r = 8;
-		env.c = 8;
+		env.r = 10;
+		env.c = 10;
 		env.home = new Point2D(1, 1);
 		env.obstacles = obstaclelist;
 
