@@ -30,9 +30,7 @@ public class BFS implements Search
 			Node n = f.dequeue();
 			f_hash.remove(n);
 
-			if(!explored.contains(n)) 
-			{
-
+			if(!explored.contains(n)) {
 				explored.add(n);
 				State s = n.state;
 
@@ -40,9 +38,7 @@ public class BFS implements Search
 				{
 					Node child = new Node(s.next_state(m), n, m);
 
-					if(is_goal(child.state)) {
-						return path(child);
-					}
+					if(is_goal(child.state)) return path(child);
 					else if(!f_hash.contains(child) && !explored.contains(child)) 
 					{
 						f.enqueue(child);
@@ -99,8 +95,8 @@ public static void main(String args[]) {
 	dirtlist.add(new Point2D(4, 1));
 	dirtlist.add(new Point2D(3, 2));
 	dirtlist.add(new Point2D(5, 5));
-	dirtlist.add(new Point2D(20, 20));
-	dirtlist.add(new Point2D(20, 19));
+	dirtlist.add(new Point2D(19, 3));
+	dirtlist.add(new Point2D(19, 19));
 
 	State state = new State(false, new Point2D(1, 1), 0, dirtlist);
 
@@ -113,14 +109,12 @@ public static void main(String args[]) {
 	Search searcher = new BFS(env);	
 
 	java.util.Stack<String> moves = searcher.search(state);
-	System.out.println(watch.elapsedTime());
 
 	while(!moves.isEmpty()) {
 		String s = moves.pop();
 		System.out.println(s);
 	}
-
-
+	System.out.println(watch.elapsedTime());
 }
 
 }
