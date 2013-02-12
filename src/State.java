@@ -50,14 +50,14 @@ public class State
 		switch(direction)
 		{
 		    case 0: // North
-			if(location.y() == env.c || env.obstacles.contains(new Point2D(location.x(), location.y() + 1)))//If in northmost row, or obstacle 
+			if(location.y() == env.r || env.obstacles.contains(new Point2D(location.x(), location.y() + 1)))//If in northmost row, or obstacle 
 			break;
 			else
 				moves.add("GO");
 			break;
 		    case 1: // East
 			//If we are at the rightmost location
-			if(location.x() == env.r || env.obstacles.contains(new Point2D(location.x() + 1, location.y()))) //If in eastmost column, or obstacle in front.
+			if(location.x() == env.c || env.obstacles.contains(new Point2D(location.x() + 1, location.y()))) //If in eastmost column, or obstacle in front.
 			break;
 			else
 				moves.add("GO");
